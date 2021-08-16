@@ -20,11 +20,25 @@ export class TimeTableComponent implements OnInit {
     day: number,
     periods: Period[]
   ): { day: number; periods: Period[] } {
-    return { day: day, periods: periods.filter((p) => p.days.includes(day)) };
+    return {
+      day: day,
+      periods: periods
+        .filter((p) => p.day === day)
+        .sort((a, b) => a.startTime - b.startTime),
+    };
   }
 
   deletePeriod(id: string) {
     this.periodService.deletePeriod(id).subscribe((data) => {
+      this.periods = [];
+      for (let i = 0; i < 5; i++) {
+        this.periods.push(this.groupPeriodsForDay(i, data.periods));
+      }
+    });
+  }
+
+  updatePeriod(period: Period) {
+    this.periodService.updatePeriod(period).subscribe((data) => {
       this.periods = [];
       for (let i = 0; i < 5; i++) {
         this.periods.push(this.groupPeriodsForDay(i, data.periods));

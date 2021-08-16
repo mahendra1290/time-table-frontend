@@ -2,7 +2,7 @@ export interface Period {
   _id: string;
   startTime: number;
   endTime: number;
-  days: number[];
+  day: number;
   subject: string;
   meetLink: string;
   sections?: string[];

@@ -12,7 +12,11 @@
         class="flex-grow bg-gray-900 shadow-md rounded-md px-3 py-3"
         [period]="period"
         (delete)="deletePeriod($event)"
+        (edit)="updatePeriod($event)"
         *ngFor="let period of periods[i]?.periods"></app-period-block>
+      <div *ngIf="!periods[i]?.periods?.length" class="flex-grow bg-gray-900 shadow-md rounded-md px-3 py-3">
+        No classes for {{day}}
+      </div>
     </div>
   </div>
 

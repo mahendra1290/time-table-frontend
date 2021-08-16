@@ -14,6 +14,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Period } from '../models/period';
 
 @Component({
@@ -50,12 +51,17 @@ export class PeriodBlockComponent implements OnInit {
   state: string = 'display';
 
   @Output()
-  edit: EventEmitter<string> = new EventEmitter();
+  edit: EventEmitter<Period> = new EventEmitter();
 
   @Output()
   delete: EventEmitter<string> = new EventEmitter();
 
   constructor() {}
+
+  updatePeriod() {
+    this.edit.emit(this.period);
+    this.state = 'display';
+  }
 
   enterEditState() {
     this.state = 'edit';

@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { PeriodsApiResponse } from './api/response';
 import { Period } from './models/period';
 
-const BASE_URL = 'http://localhost:4000';
+const BASE_URL = 'https://fathomless-refuge-76233.herokuapp.com';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +30,14 @@ export class PeriodsService {
   deletePeriod(id: string): Observable<PeriodsApiResponse> {
     return this.httpClient.delete<PeriodsApiResponse>(
       `${this.periodUrl}/${id}`
+    );
+  }
+
+  updatePeriod(period: Period): Observable<PeriodsApiResponse> {
+    console.log(period);
+    return this.httpClient.put<PeriodsApiResponse>(
+      `${this.periodUrl}/${period._id}`,
+      period
     );
   }
 }

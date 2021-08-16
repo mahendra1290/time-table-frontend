@@ -27,7 +27,16 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
 
   periodTimings = periodTimings;
 
-  sectionOptions = ['CS A', 'CS B', 'CS 1', 'CS 2'];
+  sectionOptions = [
+    'CS A',
+    'CS B',
+    'CS 1',
+    'CS 2',
+    'CS 3',
+    'CS 4',
+    'CS 5',
+    'CS 6',
+  ];
 
   periodNumbers = periodTimings.map(
     (p) => `${p.periodNumber} (${p.startTime} - ${p.endTime})`
@@ -69,7 +78,7 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
       endTime: endTimeInMinutes,
       subject: this.subject.value,
       meetLink: this.meetLink.value,
-      days: [this.selectedDay],
+      day: this.selectedDay,
       sections: Array.from(this.sectionSelector?.selected || []),
     };
 

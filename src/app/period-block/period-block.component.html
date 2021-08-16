@@ -10,8 +10,9 @@
     <a [href]="period.meetLink" target="_blank">{{period.subject}}</a>
   </h1>
   <input
-    class="rounded-md text-black mb-2 border-none focus:outline-none focus:ring-transparent border-b-2 border-black"
-    [value]="period.meetLink"
+    class="rounded-sm bg-gray-700 text-gray-100 mb-2 border-none focus:outline-none focus:ring-transparent border-b-2 border-black"
+    [(ngModel)]="period.meetLink"
+    (keydown.enter)="updatePeriod()"
     *ngIf="state == 'edit'" type="url">
   <div class="flex mb-2">
     <p class="mr-2" *ngFor="let section of period.sections">
@@ -54,7 +55,7 @@
     </button>
 
     <!-- save button -->
-    <button *ngIf="state == 'edit'" class="period-btn bg-transparent border-none"><svg
+    <button (click)="updatePeriod()" *ngIf="state == 'edit'" class="period-btn bg-transparent border-none"><svg
         xmlns="http://www.w3.org/2000/svg" class="text-green-400 h-6 w-6" fill="none" viewBox="0 0 24 24"
         stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
