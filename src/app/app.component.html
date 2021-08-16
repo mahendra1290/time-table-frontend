@@ -1,13 +1,15 @@
-<div class="bg-white  px-4 py-2">
-  <a class="text-gray-400" routerLink="/add-period"><button routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+<div>
+
+  <div class="bg-white  px-4 py-2">
+    <a class="text-gray-400" routerLink="/add-period"><button routerLinkActive="active" [routerLinkActiveOptions]="{exact:
     true}" class=" nav-btn mr-2">Add
-      Period</button></a>
-  <a class="text-gray-400" routerLink="/"><button routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+        Period</button></a>
+    <a class="text-gray-400" routerLink="/"><button routerLinkActive="active" [routerLinkActiveOptions]="{exact:
     true}" class="nav-btn">Time Table</button></a>
 
 
+  </div>
+
+  <router-outlet></router-outlet>
 </div>
-
-<router-outlet></router-outlet>
-
 <!-- <footer>Made with love for You</footer> -->
