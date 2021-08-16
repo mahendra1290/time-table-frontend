@@ -12,11 +12,31 @@ import { PeriodsService } from '../periods.service';
 export class TimeTableComponent implements OnInit {
   constructor(private periodService: PeriodsService) {}
 
-  periods: Period[] = [];
+  periods: { day: number; periods: Period[] }[] = [];
+
+  days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+  groupPeriodsForDay(
+    day: number,
+    periods: Period[]
+  ): { day: number; periods: Period[] } {
+    return { day: day, periods: periods.filter((p) => p.days.includes(day)) };
+  }
+
+  deletePeriod(id: string) {
+    this.periodService.deletePeriod(id).subscribe((data) => {
+      this.periods = [];
+      for (let i = 0; i < 5; i++) {
+        this.periods.push(this.groupPeriodsForDay(i, data.periods));
+      }
+    });
+  }
 
   ngOnInit(): void {
-    this.periodService
-      .getPeriods()
-      .subscribe((periods) => (this.periods = periods));
+    this.periodService.getPeriods().subscribe((periods) => {
+      for (let i = 0; i < 5; i++) {
+        this.periods.push(this.groupPeriodsForDay(i, periods));
+      }
+    });
   }
 }

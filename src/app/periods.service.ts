@@ -26,4 +26,10 @@ export class PeriodsService {
       .get<PeriodsApiResponse>(this.periodUrl)
       .pipe(map((val) => val.periods));
   }
+
+  deletePeriod(id: string): Observable<PeriodsApiResponse> {
+    return this.httpClient.delete<PeriodsApiResponse>(
+      `${this.periodUrl}/${id}`
+    );
+  }
 }

@@ -1,0 +1,72 @@
+<div class="relative" (mouseenter)="hovered=true" (mouseleave)="hovered=false; state='display'">
+  <div class="flex justify-between items-center">
+    <p>
+      <span class="ml-auto">{{period.startTime | minutesTime}}</span> -
+      <span class="ml-auto">{{period.endTime | minutesTime}}</span>
+    </p>
+    <p class="rounded-full bg-green-500 w-4 h-4 text-4xl ml-2 right-0 top-0"></p>
+  </div>
+  <h1 class="text-lg md:text-2xl mb-4 mt-2 text-gray-300 hover:underline cursor-pointer font-bold uppercase">
+    <a [href]="period.meetLink" target="_blank">{{period.subject}}</a>
+  </h1>
+  <input
+    class="rounded-md text-black mb-2 border-none focus:outline-none focus:ring-transparent border-b-2 border-black"
+    [value]="period.meetLink"
+    *ngIf="state == 'edit'" type="url">
+  <div class="flex mb-2">
+    <p class="mr-2" *ngFor="let section of period.sections">
+      {{section}}
+    </p>
+  </div>
+  <div [@openClosed]="hovered ? 'open' : 'closed'" class="flex  overflow-hidden justify-end ml-auto">
+
+    <!-- join button -->
+    <a [href]="period.meetLink" target="_blank"><button *ngIf="state != 'edit'"
+        class="period-btn bg-transparent border-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="text-blue-500 h-6 w-6"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      </button>
+    </a>
+
+    <!-- edit button -->
+    <button *ngIf="state != 'edit'" class="period-btn bg-transparent border-none"
+      (click)="enterEditState()">
+      <svg xmlns="http://www.w3.org/2000/svg" class="text-green-500 h-6 w-6" fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+      </svg>
+    </button>
+
+
+    <!-- delete button -->
+    <button *ngIf="state != 'edit'" class="period-btn bg-transparent border-none"
+      (click)="delete.emit(period._id)">
+      <svg xmlns="http://www.w3.org/2000/svg" class="text-red-400 h-6 w-6" fill="none"
+        viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+      </svg>
+    </button>
+
+    <!-- save button -->
+    <button *ngIf="state == 'edit'" class="period-btn bg-transparent border-none"><svg
+        xmlns="http://www.w3.org/2000/svg" class="text-green-400 h-6 w-6" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+      </svg></button>
+
+    <!-- cancel button -->
+    <button *ngIf="state == 'edit'" class="period-btn bg-transparent border-none"
+      (click)="state = 'display'">
+      <svg xmlns="http://www.w3.org/2000/svg" class="text-red-400 h-6 w-6" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg></button>
+  </div>
+</div>
