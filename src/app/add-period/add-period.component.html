@@ -1,4 +1,4 @@
-<form class="container lg:w-1/4 md:w-1/3 w-full p-4 mx-auto">
+<form class="container lg:w-1/4 md:w-1/3 w-full p-6 mx-auto">
   <h1 class="prose prose-2xl">Add Period</h1>
   <div class="grid grid-cols-1 gap-6 mt-5">
     <label class="block">
@@ -18,31 +18,15 @@
       <app-multi-select #section_multiselect [options]="sectionOptions"></app-multi-select>
     </label>
 
+    <label class="block">
+      <span class=" text-gray-700">Period</span>
 
-    <span class=" text-gray-700">Period</span>
-    <div class="flex justify-between">
-      <div *ngFor="let timing of periodTimings.slice(0,4); let i = index"
-        [ngClass]="{'day-capsule-selected': (selectedPeriod[0] == i || selectedPeriod[1] == i)}"
-        (click)="togglePeriod(i)"
-        class="has-tooltip day-capsule day-capsule">
-        {{timing.periodNumber}}
-        <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>{{timing.startTime + " - " +
-          timing.endTime}}</span>
-      </div>
-
-    </div>
-
-    <div class="flex justify-between">
-      <div *ngFor="let timing of periodTimings.slice(4); let i = index"
-        [ngClass]="{'day-capsule-selected': (selectedPeriod[0] === i+4 || selectedPeriod[1] === i+4)}"
-        (click)="togglePeriod(i+4)"
-        class="has-tooltip day-capsule day-capsule">
-        {{timing.periodNumber}}
-        <span class='tooltip rounded shadow-lg p-1 bg-gray-100 text-black -mt-8'>{{timing.startTime + " - " +
-          timing.endTime}}</span>
-      </div>
-
-    </div>
+      <select class="form-select w-full block px-4 py-3 rounded-md" [formControl]="period">
+        <option [value]="timing.startTime+'|'+timing.endTime" *ngFor="let timing of periodTimings; let i = index">
+          {{timing.startTime + " - " + timing.endTime}}
+        </option>
+      </select>
+    </label>
 
     <span class="block text-gray-700">Day</span>
     <div class="flex justify-between">

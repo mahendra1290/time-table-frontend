@@ -23,6 +23,8 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
 
   meetLink = new FormControl('', Validators.required);
 
+  period = new FormControl('', Validators.required);
+
   days = ['Mon', 'Tue', 'Wed', 'Thr', 'Fri'];
 
   periodTimings = periodTimings;
@@ -66,8 +68,9 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
   }
 
   addPeriod() {
-    let st = this.periodTimings[this.selectedPeriod[0]].startTime;
-    let et = this.periodTimings[this.selectedPeriod[0]].endTime;
+    let st = this.period.value.split('|')[0];
+    let et = this.period.value.split('|')[1];
+
     let startTime: moment.Moment = moment(st, 'hh:mm a');
     let endTime: moment.Moment = moment(et, 'HH:mm a');
     let startTimeInMinutes = startTime.hours() * 60 + startTime.minutes();
@@ -85,16 +88,6 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
     this.periodsService.addPeriod(period).subscribe(
       (data) => console.log(data),
       (error) => console.log(error)
-    );
-
-    console.log(startTime);
-    console.log(startTimeInMinutes);
-    console.log(
-      this.subject.value,
-      this.meetLink.value,
-      Array.from(this.sectionSelector?.selected || []),
-      this.selectedDay,
-      this.selectedPeriod[0]
     );
   }
 

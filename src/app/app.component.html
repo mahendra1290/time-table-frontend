@@ -1,9 +1,9 @@
 <div class="bg-white  px-4 py-2">
-  <a routerLink="/add-period"><button class="nav-btn mr-2 "
-      routerLinkActive #rla="routerLinkActive"
-      [ngClass]="rla.isActive ? 'border-b-4 text-black border-blue-700' : 'text-gray-400'">Add
+  <a class="text-gray-400" routerLink="/add-period"><button routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+    true}" class=" nav-btn mr-2">Add
       Period</button></a>
-  <a routerLink="/"><button class="nav-btn text-gray-500" [ngClass]="{'!text-black': true}">Time Table</button></a>
+  <a class="text-gray-400" routerLink="/"><button routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+    true}" class="nav-btn">Time Table</button></a>
 
 
 </div>

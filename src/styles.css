@@ -38,3 +38,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 .period-btn {
   @apply px-2 py-2 text-sm border-4 font-medium rounded-full ml-3 text-white;
 }
+
+.active {
+  @apply text-black border-b-4 border-blue-600;
+}
+.activeb {
+  @apply text-black border-b-4 border-blue-600;
+}
