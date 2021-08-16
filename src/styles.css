@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* html, body { height: 100%; }
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+
+.period-capsule {
+  @apply bg-red-400;
+}
+
+.day-capsule {
+  @apply cursor-pointer py-2
+  px-4
+  bg-transparent
+  border-2
+  text-black
+  rounded-full  active:bg-green-400;
+}
+
+.day-capsule-selected {
+  @apply bg-green-400;
+}
+
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
+}
+
+.nav-btn {
+  @apply bg-white p-2 inline-flex items-center justify-center  hover:text-gray-500 hover:bg-gray-100 focus:outline-none;
+}
