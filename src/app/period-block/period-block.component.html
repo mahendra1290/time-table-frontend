@@ -4,7 +4,13 @@
       <span class="ml-auto">{{period.startTime | minutesTime}}</span> -
       <span class="ml-auto">{{period.endTime | minutesTime}}</span>
     </p>
-    <p class="rounded-full bg-green-500 w-4 h-4 text-4xl ml-2 right-0 top-0"></p>
+    <p *ngIf="currentDay == period.day && period.endTime < currentTimeInMinutes"
+      class="rounded-full bg-red-500 w-4 h-4 text-4xl ml-2 right-0 top-0"></p>
+    <p *ngIf="currentDay == period.day && period.startTime <= currentTimeInMinutes && period.endTime >= currentTimeInMinutes"
+      class="rounded-full bg-green-500 w-4 h-4 text-4xl ml-2 right-0 top-0"></p>
+    <p *ngIf="currentDay == period.day && period.startTime > currentTimeInMinutes"
+      class="rounded-full bg-blue-500 w-4 h-4 text-4xl ml-2 right-0 top-0"></p>
+
   </div>
   <h1 class="text-lg md:text-2xl mb-4 mt-2 text-gray-300 hover:underline cursor-pointer font-bold uppercase">
     <a [href]="period.meetLink" target="_blank">{{period.subject}}</a>

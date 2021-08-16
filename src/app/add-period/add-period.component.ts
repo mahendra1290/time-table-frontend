@@ -44,24 +44,7 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
     (p) => `${p.periodNumber} (${p.startTime} - ${p.endTime})`
   );
 
-  selectedPeriod: number[] = [0, -1];
-
   selectedDay: number = 0;
-
-  togglePeriod(period: number) {
-    if (this.selectedPeriod[0] === period) {
-      // this.selectedPeriod[0] = -1;
-      // } else if (this.selectedPeriod[1] === period) {
-      //   this.selectedPeriod[1] = -1;
-      // } else if (this.selectedPeriod[0] == -1) {
-      // this.selectedPeriod[0] = period;
-      // } else if (this.selectedPeriod[1] == -1) {
-      //   this.selectedPeriod[1] = period;
-    } else {
-      // this.selectedPeriod[0] = this.selectedPeriod[1];
-      this.selectedPeriod[0] = period;
-    }
-  }
 
   toggleDay(day: number) {
     this.selectedDay = day;

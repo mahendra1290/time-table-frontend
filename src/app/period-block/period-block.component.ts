@@ -1,20 +1,13 @@
 import {
   animate,
-  keyframes,
   state,
   style,
   transition,
   trigger,
 } from '@angular/animations';
-import {
-  Component,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import * as moment from 'moment';
 import { Period } from '../models/period';
 
 @Component({
@@ -46,9 +39,19 @@ export class PeriodBlockComponent implements OnInit {
   @Input()
   period!: Period;
 
+  @Input()
+  currentTimeInMinutes = 0;
+
+  @Input()
+  currentDay: number = 0;
+
+  timer!: any;
+
   hovered: boolean = false;
 
   state: string = 'display';
+
+  currentTime = moment();
 
   @Output()
   edit: EventEmitter<Period> = new EventEmitter();
