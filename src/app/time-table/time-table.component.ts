@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
+import { Subject } from 'rxjs';
 import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { switchMap } from 'rxjs/operators';
 import { Period } from '../models/period';
@@ -11,9 +13,20 @@ import { PeriodsService } from '../periods.service';
   styleUrls: ['./time-table.component.css'],
 })
 export class TimeTableComponent implements OnInit, OnDestroy {
-  constructor(private periodService: PeriodsService) {}
+  constructor(
+    private periodService: PeriodsService,
+    private snackBar: MatSnackBar
+  ) {}
 
-  periods: { day: number; periods: Period[] }[] = [];
+  periods: Period[] = [];
+
+  periodsGroupedByDay: { day: number; periods: Period[] }[] = [];
+
+  deletePeriodAction = new Subject<[string, string]>();
+
+  undoClicked = false;
+
+  deletedPeriodRow: Period[] = [];
 
   days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
@@ -43,18 +56,43 @@ export class TimeTableComponent implements OnInit, OnDestroy {
 
   deletePeriod(id: string) {
     this.periodService.deletePeriod(id).subscribe((data) => {
-      this.periods = [];
-      for (let i = 0; i < 5; i++) {
-        this.periods.push(this.groupPeriodsForDay(i, data.periods));
+      // this.periodsGroupedByDay = [];
+      // for (let i = 0; i < 5; i++) {
+      // this.periodsGroupedByDay.push(this.groupPeriodsForDay(i, data.periods));
+      // }
+    });
+  }
+
+  showDeletedSnackbar(day: number, id: string) {
+    this.undoClicked = false;
+    const confirmationRef = this.snackBar.open('Period Deleted', 'Undo', {
+      duration: 5000,
+    });
+
+    this.deletedPeriodRow = [...this.periodsGroupedByDay[day].periods];
+    this.periodsGroupedByDay[day].periods = this.periodsGroupedByDay[
+      day
+    ].periods.filter((p) => p._id != id);
+
+    confirmationRef.afterDismissed().subscribe(() => {
+      if (!this.undoClicked) {
+        this.deletePeriod(id);
       }
+    });
+
+    confirmationRef.onAction().subscribe(() => {
+      this.undoClicked = true;
+      this.periodsGroupedByDay[day].periods = this.deletedPeriodRow;
+      this.deletedPeriodRow = [];
+      this.snackBar.open('Action undone.');
     });
   }
 
   updatePeriod(period: Period) {
     this.periodService.updatePeriod(period).subscribe((data) => {
-      this.periods = [];
+      this.periodsGroupedByDay = [];
       for (let i = 0; i < 5; i++) {
-        this.periods.push(this.groupPeriodsForDay(i, data.periods));
+        this.periodsGroupedByDay.push(this.groupPeriodsForDay(i, data.periods));
       }
     });
   }
@@ -62,12 +100,13 @@ export class TimeTableComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.periodService.getPeriods().subscribe((periods) => {
       for (let i = 0; i < 5; i++) {
-        this.periods.push(this.groupPeriodsForDay(i, periods));
+        this.periodsGroupedByDay.push(this.groupPeriodsForDay(i, periods));
       }
     });
 
     this.timer = setInterval(() => {
       this.currentTime = moment();
+      this.currentDay = this.currentTime.day();
       this.currentTimeInMinutes =
         this.currentTime.hour() * 60 + this.currentTime.minutes();
     }, this.updateTimeInMilliSeconds);

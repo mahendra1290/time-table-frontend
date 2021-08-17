@@ -6,6 +6,7 @@ import { PeriodsApiResponse } from './api/response';
 import { Period } from './models/period';
 
 const BASE_URL = 'https://fathomless-refuge-76233.herokuapp.com';
+// const BASE_URL = 'http://localhost:4000';
 
 @Injectable({
   providedIn: 'root',
