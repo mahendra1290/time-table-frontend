@@ -17,6 +17,8 @@ import {
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import {
     HttpClientModule,
     MatDialogModule,
     MatSnackBarModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [
     {
