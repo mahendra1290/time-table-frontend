@@ -26,8 +26,8 @@ export class TimeTableComponent implements OnInit, OnDestroy {
 
   currentDay = this.currentTime.day() - 1;
 
-  //5 minutes
-  updateTimeInMilliSeconds = 5 * 60 * 1000;
+  //1 minutes
+  updateTimeInMilliSeconds = 1 * 60 * 1000;
 
   groupPeriodsForDay(
     day: number,
@@ -66,12 +66,10 @@ export class TimeTableComponent implements OnInit, OnDestroy {
       }
     });
 
-    console.log(this.currentTimeInMinutes);
-    console.log(this.currentDay, 'gy');
     this.timer = setInterval(() => {
-      // this.currentTime = moment();
-      this.currentTimeInMinutes += 2;
-      // this.currentTime.hour() * 60 + this.currentTime.minutes();
+      this.currentTime = moment();
+      this.currentTimeInMinutes =
+        this.currentTime.hour() * 60 + this.currentTime.minutes();
     }, this.updateTimeInMilliSeconds);
   }
 
