@@ -25,6 +25,7 @@
     "@tailwindcss/forms": "^0.3.3",
     "@tailwindcss/typography": "^0.4.1",
     "express": "^4.17.1",
+    "firebase": "^8.9.1",
     "moment": "^2.29.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
