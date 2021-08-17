@@ -8,15 +8,17 @@
 
     </div>
     <div class="flex flex-wrap pb-4 md:py-4 gap-4 w-full">
-      <app-period-block
-        class="flex-grow bg-gray-900 shadow-md rounded-md px-3 py-3"
-        [period]="period"
-        (delete)="deletePeriod($event)"
-        (edit)="updatePeriod($event)"
-        [currentTimeInMinutes]="currentTimeInMinutes"
-        [currentDay]="currentDay"
-        *ngFor="let period of periods[i]?.periods"></app-period-block>
-      <div *ngIf="!periods[i]?.periods?.length" class="flex-grow bg-gray-900 shadow-md rounded-md px-3 py-3">
+      <ng-container *ngFor="let period of periodsGroupedByDay[i]?.periods">
+        <app-period-block
+          class="flex-grow bg-gray-900 shadow-md rounded-md px-3 py-3"
+          [period]="period"
+          (delete)="showDeletedSnackbar(period.day, period._id)"
+          (edit)="updatePeriod($event)"
+          [currentTimeInMinutes]="currentTimeInMinutes"
+          [currentDay]="currentDay"></app-period-block>
+      </ng-container>
+      <div *ngIf="!(periodsGroupedByDay[i]?.periods?.length || 0 )"
+        class="flex-grow bg-gray-900 shadow-md rounded-md px-3 py-3">
         No classes for {{day}}
       </div>
     </div>

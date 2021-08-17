@@ -12,6 +12,12 @@ import { TimeTableComponent } from './time-table/time-table.component';
 import { MinutesTimePipe } from './minutes-time.pipe';
 import { PeriodBlockComponent } from './period-block/period-block.component';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import {
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/snack-bar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,8 +35,19 @@ import { PeriodBlockComponent } from './period-block/period-block.component';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatDialogModule,
+    MatSnackBarModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        duration: 2500,
+        horizontalPosition: 'left',
+        panelClass: ['bg-gray-900'],
+      },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
