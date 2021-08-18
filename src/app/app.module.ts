@@ -12,7 +12,6 @@ import { TimeTableComponent } from './time-table/time-table.component';
 import { MinutesTimePipe } from './minutes-time.pipe';
 import { PeriodBlockComponent } from './period-block/period-block.component';
 
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
