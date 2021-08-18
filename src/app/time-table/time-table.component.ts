@@ -106,7 +106,7 @@ export class TimeTableComponent implements OnInit, OnDestroy {
 
     this.timer = setInterval(() => {
       this.currentTime = moment();
-      this.currentDay = this.currentTime.day();
+      this.currentDay = this.currentTime.day() - 1;
       this.currentTimeInMinutes =
         this.currentTime.hour() * 60 + this.currentTime.minutes();
     }, this.updateTimeInMilliSeconds);
