@@ -13,10 +13,10 @@ export class AppComponent {
   constructor(public authService: AngularFireAuth) {}
 
   login() {
-    this.authService.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    // this.authService.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
 
   logout() {
-    this.authService.signOut();
+    // this.authService.signOut();
   }
 }
