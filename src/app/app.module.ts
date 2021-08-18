@@ -13,12 +13,17 @@ import { MinutesTimePipe } from './minutes-time.pipe';
 import { PeriodBlockComponent } from './period-block/period-block.component';
 
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+
 import {
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -37,9 +42,17 @@ import { environment } from 'src/environments/environment';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatDialogModule,
     MatSnackBarModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    ServiceWorkerModule.register('firebase-messaging-sw.js', {
+      enabled: true,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [
     {
@@ -47,7 +60,7 @@ import { environment } from 'src/environments/environment';
       useValue: {
         duration: 2500,
         horizontalPosition: 'left',
-        panelClass: ['bg-gray-900'],
+        panelClass: ['bg-gray-100', 'shadow-lg', 'text-black', 'border-2'],
       },
     },
   ],
