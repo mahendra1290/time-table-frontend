@@ -1,11 +1,42 @@
-<div>
+<nav class="flex px-2 flex-wrap py-4 justify-between md:h-[90px] bg-gray-900 shadow-md items-center">
+  <div class="flex items-center gap-4">
+    <h1 class="text-2xl pl-2 md:pl-4 text-gray-400  font-bolder">Time Table</h1>
+    <a class="text-gray-400 mr-2" routerLink="/add-period" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact:
+      true}">Add
+      Period</a>
+    <a class="bg-transparent text-gray-400" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+        true}">Time Table</a>
 
-  <div class="bg-white  px-4 py-2">
-    <a class="text-gray-400" routerLink="/add-period"><button routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-    true}" class=" nav-btn mr-2">Add
-        Period</button></a>
-    <a class="text-gray-400" routerLink="/"><button routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-    true}" class="nav-btn">Time Table</button></a>
+  </div>
+
+
+  <div class="flex items-center gap-4 bg-transparent px-4 py-2">
+    <p [class]="editSem ? 'block' : 'hidden'">
+      <mat-form-field class="select-field" appearance="outline">
+        <mat-label class="text-white">Semester</mat-label>
+        <mat-select #sem_select (selectionChange)="editSem=false" [(ngModel)]="sem">
+          <mat-option *ngFor="let option of sems" [value]="option">{{option}}</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+    </p>
+
+    <h1 *ngIf="!editSem" (click)="editSemester()" class="cursor-pointer text-xl text-gray-100">
+      {{sem}} Sem
+    </h1>
+    <h1 *ngIf="!editBranch" (click)="setBranch()" class="cursor-pointer text-xl text-gray-100">
+      {{branch}} Engineering
+    </h1>
+    <p [class]="editBranch ? 'block' : 'hidden'">
+      <mat-form-field class="select-field" appearance="outline">
+        <mat-label class="text-white">Branch</mat-label>
+        <mat-select #branch_select (selectionChange)="editBranch=false" [(ngModel)]="branch">
+          <mat-option *ngFor="let option of branchs" [value]="option">{{option + ' Engineering'}}</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+    </p>
 
   </div>
 
@@ -14,8 +45,8 @@
   <button (click)="login()"> Login with Google</button>
   <button (click)="logout()"> Logout</button> -->
 
-  <router-outlet></router-outlet>
-</div>
+</nav>
+<router-outlet></router-outlet>
 
 <footer class="text-lg text-center font-bold  mt-8 p-2">Made with <svg xmlns="http://www.w3.org/2000/svg"
     class="inline-block text-red-600 h-5 w-5"

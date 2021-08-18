@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
 
+  baseUrl: 'http://localhost:4000',
+
   firebaseConfig: {
     apiKey: 'AIzaSyAIbpaE-laye99kqwOGh0quT-RCrIl27-g',
     authDomain: 'nit-time-table.firebaseapp.com',

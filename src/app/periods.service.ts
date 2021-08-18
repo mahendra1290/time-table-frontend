@@ -2,12 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { PeriodsApiResponse } from './api/response';
 import { Period } from './models/period';
 
-const BASE_URL = 'https://fathomless-refuge-76233.herokuapp.com';
-// const BASE_URL = 'http://localhost:4000';
-
+const BASE_URL = environment.baseUrl;
 @Injectable({
   providedIn: 'root',
 })
