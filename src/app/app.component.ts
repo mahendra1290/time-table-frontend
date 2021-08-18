@@ -1,13 +1,5 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { MatSelect } from '@angular/material/select';
-import { SwPush } from '@angular/service-worker';
-import firebase from 'firebase/app';
-import 'firebase/messaging';
-import { environment } from 'src/environments/environment';
-import { MessagingService } from './messaging.service';
-firebase.initializeApp(environment.firebaseConfig);
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -33,14 +25,11 @@ export class AppComponent {
 
   editSemester() {
     this.editSem = true;
-    // this.semSelector.open();
     console.log(this.semSelector);
   }
 
   setBranch() {
     this.editBranch = true;
-    // this.branchSelector.open();
-    // console.log(this.semSelector);
   }
 
   branchs = [
@@ -56,43 +45,5 @@ export class AppComponent {
 
   branch: string = this.branchs[0];
 
-  constructor(
-    public authService: AngularFireAuth,
-    private swPush: SwPush,
-    private msgService: MessagingService
-  ) {
-    const messaging = firebase.messaging();
-    swPush.messages.subscribe((val) => console.log(val));
-    navigator.serviceWorker.getRegistration().then((registration) => {
-      console.log(registration);
-      messaging
-        .getToken({
-          vapidKey: this.VAPID_PUBLIC_KEY,
-          serviceWorkerRegistration: registration,
-        })
-        .then((token) => {
-          console.log(token);
-          this.msgService.subscribeToNotification(token);
-        });
-    });
-  }
-
-  login() {
-    // this.authService.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-  }
-
-  subscribeToNotifications() {
-    this.swPush
-      .requestSubscription({
-        serverPublicKey: this.VAPID_PUBLIC_KEY,
-      })
-      .then((sub) => console.log(sub))
-      .catch((err) =>
-        console.error('Could not subscribe to notifications', err)
-      );
-  }
-
-  logout() {
-    this.authService.signOut();
-  }
+  constructor() {}
 }
