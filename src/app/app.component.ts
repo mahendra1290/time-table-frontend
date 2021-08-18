@@ -62,6 +62,7 @@ export class AppComponent {
     private msgService: MessagingService
   ) {
     const messaging = firebase.messaging();
+    swPush.messages.subscribe((val) => console.log(val));
     navigator.serviceWorker.getRegistration().then((registration) => {
       console.log(registration);
       messaging
