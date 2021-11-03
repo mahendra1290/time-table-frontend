@@ -17,6 +17,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import {
   MatSnackBarModule,
@@ -30,6 +32,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { PeriodStatusIndicatorComponent } from './period-status-indicator/period-status-indicator.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     MinutesTimePipe,
     PeriodBlockComponent,
     LoadingSpinnerComponent,
+    PeriodStatusIndicatorComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,6 +59,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     MatSelectModule,
     MatMenuModule,
     MatIconModule,
+    MatTooltipModule,
+    ClipboardModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
@@ -70,7 +76,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
       useValue: {
         duration: 2500,
         horizontalPosition: 'left',
-        panelClass: ['bg-gray-100', 'shadow-lg', 'text-black', 'border-2'],
+        panelClass: ['bg-gray-900', 'shadow-lg', 'text-white', 'border-2'],
       },
     },
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },

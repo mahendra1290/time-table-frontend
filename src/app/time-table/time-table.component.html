@@ -7,20 +7,24 @@
       <h1>{{day}}</h1>
 
     </div>
-    <div class="flex flex-wrap pb-4 md:py-4 gap-4 w-full items-stretch">
-      <app-loading-spinner *ngIf="periodsLoading"></app-loading-spinner>
+    <div class="flex flex-wrap pb-4 md:py-4 gap-4 w-full justify-center"
+      [ngClass]="periodsLoading ? 'items-center' : ''">
+      <div class="flex justify-center items-center p-6 rounded-md bg-gray-900 w-full h-16"
+        *ngIf="periodsLoading">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
       <ng-container *ngFor="let period of periodsGroupedByDay[i]?.periods">
         <app-period-block
           class="flex-grow bg-gray-900 shadow-md rounded-md px-3 py-3"
           [period]="period"
-          (delete)="period.id ? showDeletedSnackbar(period.day, period.id) : null"
+          (delete)="period.id && showDeletedSnackbar(period.day, period.id)"
           (edit)="updatePeriod($event)"
           [currentTimeInMinutes]="currentTimeInMinutes"
           [currentDay]="currentDay"></app-period-block>
       </ng-container>
       <div *ngIf="!periodsLoading && !(periodsGroupedByDay[i]?.periods?.length || 0 )"
         class="flex-grow bg-gray-900 shadow-md rounded-md px-3 py-3">
-        No classes for {{day}}
+        No classes.
       </div>
     </div>
   </div>

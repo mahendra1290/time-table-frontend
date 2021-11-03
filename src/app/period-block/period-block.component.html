@@ -1,4 +1,4 @@
-<div class="relative">
+<div class="relative period-block" [ngStyle]="{'max-height': state == 'edit' ? '600px' : '122px'}">
   <div class="flex justify-between items-center">
     <div class="flex justify-between w-full">
       <div class="flex">
@@ -8,8 +8,8 @@
           class="rounded-full mr-2 bg-green-500 w-4 h-4 text-4xl"></p>
         <p *ngIf="currentDay == period.day && period.startTime > currentTimeInMinutes"
           class="rounded-full mr-2 bg-blue-500 w-4 h-4 text-4xl"></p>
-        <span class="ml-auto">{{period.startTime | minutesTime}}</span> -
-        <span class="ml-auto">{{period.endTime | minutesTime}}</span>
+        <span class="ml-auto mr-1">{{period.startTime | minutesTime}}</span> -
+        <span class="ml-1">{{period.endTime | minutesTime}}</span>
       </div>
       <div class="ml-4 right-0 cursor-pointer">
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -48,14 +48,20 @@
       </div>
     </div>
   </div>
-  <h1 class="text-3xl md:text-3xl mb-4 mt-2 text-gray-300 hover:underline cursor-pointer font-bold uppercase">
-    <a [href]="period.meetLink" target="_blank">{{period.subject}}</a>
+  <h1 class="text-3xl md:text-3xl mb-4 mt-2 text-gray-300">
+    <a class="hover:underline cursor-pointer font-bold uppercase" [href]="period.meetLink"
+      target="_blank" matTooltip='Join class'>{{period.subject}}</a>
+    <span class="ml-2 hover:text-gray-400 cursor-pointer" matTooltip='Copy link' (click)="copyLink()">
+      <mat-icon>content_copy</mat-icon>
+    </span>
   </h1>
   <input
-    class="rounded-sm bg-gray-700 text-gray-100 mb-2 border-none focus:outline-none focus:ring-transparent border-b-2 border-black"
+    class="rounded-sm period-input bg-gray-700 p-2 text-gray-100 mb-2 border-none focus:outline-none focus:ring-transparent border-b-2 border-black"
     [(ngModel)]="period.meetLink"
     (keydown.enter)="updatePeriod()"
-    *ngIf="state == 'edit'" type="url">
+    (animationend)="animend()"
+    [ngStyle]="{'display': inputDisplayState}"
+    [ngClass]="state == 'edit' ? 'visible input-visible' : 'input-invisible'">
   <div class="flex mb-2">
     <p class="mr-2" *ngFor="let section of period.sections">
       {{section}}
@@ -64,7 +70,8 @@
   <div class="flex  overflow-hidden justify-end ml-auto">
 
     <!-- save button -->
-    <button (click)="updatePeriod()" *ngIf="state == 'edit'" class="period-btn bg-transparent border-none"><svg
+    <button (click)="updatePeriod()" *ngIf="state == 'edit'" class="period-btn bg-transparent border-none"
+      matTooltip="Save"><svg
         xmlns="http://www.w3.org/2000/svg" class="text-green-400 h-6 w-6" fill="none" viewBox="0 0 24 24"
         stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -73,7 +80,7 @@
 
     <!-- cancel button -->
     <button *ngIf="state == 'edit'" class="period-btn bg-transparent border-none"
-      (click)="state = 'display'">
+      (click)="state = 'display'" matTooltip="Cancel">
       <svg xmlns="http://www.w3.org/2000/svg" class="text-red-400 h-6 w-6" fill="none" viewBox="0 0 24 24"
         stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
