@@ -15,12 +15,15 @@ import { PeriodBlockComponent } from './period-block/period-block.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 import {
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from 'src/environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -36,6 +39,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     TimeTableComponent,
     MinutesTimePipe,
     PeriodBlockComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +53,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatMenuModule,
+    MatIconModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
@@ -67,7 +73,9 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
         panelClass: ['bg-gray-100', 'shadow-lg', 'text-black', 'border-2'],
       },
     },
+    { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },
+    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 8080] : undefined },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
