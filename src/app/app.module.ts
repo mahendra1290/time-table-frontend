@@ -76,7 +76,7 @@ import { PeriodStatusIndicatorComponent } from './period-status-indicator/period
       useValue: {
         duration: 2500,
         horizontalPosition: 'left',
-        panelClass: ['bg-gray-900', 'shadow-lg', 'text-white',],
+        panelClass: ['bg-blue-300', 'shadow-lg', 'text-black',],
       },
     },
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },
