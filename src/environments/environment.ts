@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
 
+  useEmulators: true,
+
   baseUrl: 'http://localhost:4000',
 
   firebaseConfig: {
