@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -11,32 +12,38 @@ const BASE_URL = environment.baseUrl;
   providedIn: 'root',
 })
 export class PeriodsService {
-  periodUrl = `${BASE_URL}/periods`;
+  periodsCollection!: AngularFirestoreCollection<Period>;
+  periods!: Observable<Period[]>;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private firestore: AngularFirestore) {
+    this.periodsCollection = this.firestore.collection<Period>('/periods');
+    this.periods = this.periodsCollection.snapshotChanges().pipe(
+      map(action => {
+        return action.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data } as Period
+        })
+      })
+    );
+  }
 
-  public addPeriod(
-    period: Omit<Period, '_id'>
-  ): Observable<PeriodsApiResponse> {
-    return this.httpClient.post<PeriodsApiResponse>(this.periodUrl, period);
+  public addPeriod(period: Period) {
+    return this.firestore.collection<Period>('/periods').add(period)
   }
 
   getPeriods(): Observable<Period[]> {
-    return this.httpClient
-      .get<PeriodsApiResponse>(this.periodUrl)
-      .pipe(map((val) => val.periods));
+    return this.firestore.collection<Period>('/periods').valueChanges()
   }
 
-  deletePeriod(id: string): Observable<PeriodsApiResponse> {
-    return this.httpClient.delete<PeriodsApiResponse>(
-      `${this.periodUrl}/${id}`
-    );
+  deletePeriod(id: string) {
+    return this.periodsCollection.doc(id).delete()
   }
 
   updatePeriod(period: Period): Observable<PeriodsApiResponse> {
     console.log(period);
     return this.httpClient.put<PeriodsApiResponse>(
-      `${this.periodUrl}/${period._id}`,
+      `${'huhu'}/${period.id}`,
       period
     );
   }

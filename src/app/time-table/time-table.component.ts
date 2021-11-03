@@ -16,7 +16,9 @@ export class TimeTableComponent implements OnInit, OnDestroy {
   constructor(
     private periodService: PeriodsService,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
+
+  periodsLoading = true;
 
   periods: Period[] = [];
 
@@ -55,12 +57,7 @@ export class TimeTableComponent implements OnInit, OnDestroy {
   }
 
   deletePeriod(id: string) {
-    this.periodService.deletePeriod(id).subscribe((data) => {
-      // this.periodsGroupedByDay = [];
-      // for (let i = 0; i < 5; i++) {
-      // this.periodsGroupedByDay.push(this.groupPeriodsForDay(i, data.periods));
-      // }
-    });
+    this.periodService.deletePeriod(id).then((res) => console.log(res));
   }
 
   showDeletedSnackbar(day: number, id: string) {
@@ -72,7 +69,7 @@ export class TimeTableComponent implements OnInit, OnDestroy {
     this.deletedPeriodRow = [...this.periodsGroupedByDay[day].periods];
     this.periodsGroupedByDay[day].periods = this.periodsGroupedByDay[
       day
-    ].periods.filter((p) => p._id != id);
+    ].periods.filter((p) => p.id != id);
 
     confirmationRef.afterDismissed().subscribe(() => {
       if (!this.undoClicked) {
@@ -98,7 +95,9 @@ export class TimeTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.periodService.getPeriods().subscribe((periods) => {
+    this.periodService.periods.subscribe((periods) => {
+      this.periodsLoading = false;
+
       for (let i = 0; i < 5; i++) {
         this.periodsGroupedByDay.push(this.groupPeriodsForDay(i, periods));
       }
