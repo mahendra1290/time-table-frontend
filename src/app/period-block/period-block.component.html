@@ -1,67 +1,77 @@
-<div class="relative" (mouseenter)="hovered=true" (mouseleave)="hovered=false; state='display'">
+<div class="relative period-block" [ngStyle]="{'max-height': state == 'edit' ? '600px' : '122px'}">
   <div class="flex justify-between items-center">
-    <p>
-      <span class="ml-auto">{{period.startTime | minutesTime}}</span> -
-      <span class="ml-auto">{{period.endTime | minutesTime}}</span>
-    </p>
-    <p *ngIf="currentDay == period.day && period.endTime < currentTimeInMinutes"
-      class="rounded-full bg-red-500 w-4 h-4 text-4xl ml-2 right-0 top-0"></p>
-    <p *ngIf="currentDay == period.day && period.startTime <= currentTimeInMinutes && period.endTime >= currentTimeInMinutes"
-      class="rounded-full bg-green-500 w-4 h-4 text-4xl ml-2 right-0 top-0"></p>
-    <p *ngIf="currentDay == period.day && period.startTime > currentTimeInMinutes"
-      class="rounded-full bg-blue-500 w-4 h-4 text-4xl ml-2 right-0 top-0"></p>
+    <div class="flex justify-between w-full">
+      <div class="flex">
+        <p class="rounded-full mt-[.20rem] mr-2 bg-red-500 w-4 h-4 text-4xl"
+          *ngIf="currentDay == period.day && period.endTime < currentTimeInMinutes"></p>
+        <p *ngIf="currentDay == period.day && period.startTime <= currentTimeInMinutes && period.endTime >= currentTimeInMinutes"
+          class="rounded-full mt-[.20rem] mr-2 bg-green-500 w-4 h-4 text-4xl"></p>
+        <p *ngIf="currentDay == period.day && period.startTime > currentTimeInMinutes"
+          class="rounded-full mt-[.20rem] mr-2 bg-blue-500 w-4 h-4 text-4xl"></p>
+        <span class="ml-auto mr-1">{{period.startTime | minutesTime}}</span> -
+        <span class="ml-1">{{period.endTime | minutesTime}}</span>
+      </div>
+      <div class="ml-4 right-0 cursor-pointer">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <a [href]="period.meetLink" target="_blank">
+            <button mat-menu-item>
+              <svg xmlns="http://www.w3.org/2000/svg" class="text-blue-500 h-6 w-6 inline-block mr-4"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              <span>Join</span>
+            </button>
+          </a>
+          <button (click)="enterEditState()" mat-menu-item>
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-green-500 h-6 w-6 inline-block mr-4" fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="delete.emit(period.id)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-red-400 h-6 w-6 inline-block mr-4" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
 
+      </div>
+    </div>
   </div>
-  <h1 class="text-3xl md:text-3xl mb-4 mt-2 text-gray-300 hover:underline cursor-pointer font-bold uppercase">
-    <a [href]="period.meetLink" target="_blank">{{period.subject}}</a>
+  <h1 class="text-3xl md:text-3xl mb-4 mt-2 text-gray-300">
+    <a class="hover:underline cursor-pointer font-bold uppercase" [href]="period.meetLink"
+      target="_blank" matTooltip='Join class'>{{period.subject}}</a>
+    <span class="ml-2 hover:text-gray-400 cursor-pointer" matTooltip='Copy link' (click)="copyLink()">
+      <mat-icon>content_copy</mat-icon>
+    </span>
   </h1>
   <input
-    class="rounded-sm bg-gray-700 text-gray-100 mb-2 border-none focus:outline-none focus:ring-transparent border-b-2 border-black"
+    class="rounded-sm period-input bg-gray-700 p-2 text-gray-100 mb-2 border-none focus:outline-none focus:ring-transparent border-b-2 border-black"
     [(ngModel)]="period.meetLink"
     (keydown.enter)="updatePeriod()"
-    *ngIf="state == 'edit'" type="url">
+    (animationend)="animend()"
+    [ngStyle]="{'display': inputDisplayState}"
+    [ngClass]="state == 'edit' ? 'visible input-visible' : 'input-invisible'">
   <div class="flex mb-2">
     <p class="mr-2" *ngFor="let section of period.sections">
       {{section}}
     </p>
   </div>
-  <div [@openClosed]="hovered ? 'open' : 'closed'" class="flex  overflow-hidden justify-end ml-auto">
-
-    <!-- join button -->
-    <a [href]="period.meetLink" target="_blank"><button *ngIf="state != 'edit'"
-        class="period-btn bg-transparent border-none">
-        <svg xmlns="http://www.w3.org/2000/svg" class="text-blue-500 h-6 w-6"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-        </svg>
-      </button>
-    </a>
-
-    <!-- edit button -->
-    <button *ngIf="state != 'edit'" class="period-btn bg-transparent border-none"
-      (click)="enterEditState()">
-      <svg xmlns="http://www.w3.org/2000/svg" class="text-green-500 h-6 w-6" fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-      </svg>
-    </button>
-
-
-    <!-- delete button -->
-    <button *ngIf="state != 'edit'" class="period-btn bg-transparent border-none"
-      (click)="delete.emit(period._id)">
-      <svg xmlns="http://www.w3.org/2000/svg" class="text-red-400 h-6 w-6" fill="none"
-        viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-      </svg>
-    </button>
+  <div class="flex  overflow-hidden justify-end ml-auto">
 
     <!-- save button -->
-    <button (click)="updatePeriod()" *ngIf="state == 'edit'" class="period-btn bg-transparent border-none"><svg
+    <button (click)="updatePeriod()" *ngIf="state == 'edit'" class="period-btn bg-transparent border-none"
+      matTooltip="Save"><svg
         xmlns="http://www.w3.org/2000/svg" class="text-green-400 h-6 w-6" fill="none" viewBox="0 0 24 24"
         stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -70,7 +80,7 @@
 
     <!-- cancel button -->
     <button *ngIf="state == 'edit'" class="period-btn bg-transparent border-none"
-      (click)="state = 'display'">
+      (click)="state = 'display'" matTooltip="Cancel">
       <svg xmlns="http://www.w3.org/2000/svg" class="text-red-400 h-6 w-6" fill="none" viewBox="0 0 24 24"
         stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />

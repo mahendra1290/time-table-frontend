@@ -23,6 +23,13 @@ export class AppComponent {
   editBranch: boolean = false;
   sems = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'];
 
+  login() {
+    // this.authService.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+
+  logout() {
+    // this.authService.signOut();
+  }
   editSemester() {
     this.editSem = true;
     console.log(this.semSelector);
@@ -45,5 +52,5 @@ export class AppComponent {
 
   branch: string = this.branchs[0];
 
-  constructor() {}
+  constructor() { }
 }
