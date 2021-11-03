@@ -85,13 +85,9 @@ export class TimeTableComponent implements OnInit, OnDestroy {
     });
   }
 
-  updatePeriod(period: Period) {
-    this.periodService.updatePeriod(period).subscribe((data) => {
-      this.periodsGroupedByDay = [];
-      for (let i = 0; i < 5; i++) {
-        this.periodsGroupedByDay.push(this.groupPeriodsForDay(i, data.periods));
-      }
-    });
+  async updatePeriod(period: Period) {
+    await this.periodService.updatePeriod(period);
+    this.snackBar.open("Link updated", undefined, { duration: 2000 })
   }
 
   ngOnInit(): void {

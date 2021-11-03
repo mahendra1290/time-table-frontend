@@ -32,19 +32,11 @@ export class PeriodsService {
     return this.firestore.collection<Period>('/periods').add(period)
   }
 
-  getPeriods(): Observable<Period[]> {
-    return this.firestore.collection<Period>('/periods').valueChanges()
-  }
-
-  deletePeriod(id: string) {
+  deletePeriod(id: string): Promise<void> {
     return this.periodsCollection.doc(id).delete()
   }
 
-  updatePeriod(period: Period): Observable<PeriodsApiResponse> {
-    console.log(period);
-    return this.httpClient.put<PeriodsApiResponse>(
-      `${'huhu'}/${period.id}`,
-      period
-    );
+  updatePeriod(period: Period): Promise<void> {
+    return this.periodsCollection.doc(period.id).set(period)
   }
 }
