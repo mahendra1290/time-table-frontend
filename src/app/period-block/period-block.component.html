@@ -1,12 +1,17 @@
 <div class="relative">
   <div class="flex justify-between items-center">
-    <p class="flex justify-between w-full">
-      <span>
-
+    <div class="flex justify-between w-full">
+      <div class="flex">
+        <p class="rounded-full mt-[.20rem] mr-2 bg-red-500 w-4 h-4 text-4xl"
+          *ngIf="currentDay == period.day && period.endTime < currentTimeInMinutes"></p>
+        <p *ngIf="currentDay == period.day && period.startTime <= currentTimeInMinutes && period.endTime >= currentTimeInMinutes"
+          class="rounded-full mr-2 bg-green-500 w-4 h-4 text-4xl"></p>
+        <p *ngIf="currentDay == period.day && period.startTime > currentTimeInMinutes"
+          class="rounded-full mr-2 bg-blue-500 w-4 h-4 text-4xl"></p>
         <span class="ml-auto">{{period.startTime | minutesTime}}</span> -
         <span class="ml-auto">{{period.endTime | minutesTime}}</span>
-      </span>
-      <span class="ml-4 right-0 cursor-pointer">
+      </div>
+      <div class="ml-4 right-0 cursor-pointer">
         <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
           <mat-icon>more_vert</mat-icon>
         </button>
@@ -40,15 +45,8 @@
           </button>
         </mat-menu>
 
-      </span>
-    </p>
-    <p *ngIf="currentDay == period.day && period.endTime < currentTimeInMinutes"
-      class="rounded-full bg-red-500 w-4 h-4 text-4xl ml-2 right-0 top-0"></p>
-    <p *ngIf="currentDay == period.day && period.startTime <= currentTimeInMinutes && period.endTime >= currentTimeInMinutes"
-      class="rounded-full bg-green-500 w-4 h-4 text-4xl ml-2 right-0 top-0"></p>
-    <p *ngIf="currentDay == period.day && period.startTime > currentTimeInMinutes"
-      class="rounded-full bg-blue-500 w-4 h-4 text-4xl ml-2 right-0 top-0"></p>
-
+      </div>
+    </div>
   </div>
   <h1 class="text-3xl md:text-3xl mb-4 mt-2 text-gray-300 hover:underline cursor-pointer font-bold uppercase">
     <a [href]="period.meetLink" target="_blank">{{period.subject}}</a>
