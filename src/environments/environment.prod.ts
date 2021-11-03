@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  baseUrl: 'https://fathomless-refuge-76233.herokuapp.com',
   firebaseConfig: {
     apiKey: 'AIzaSyAIbpaE-laye99kqwOGh0quT-RCrIl27-g',
     authDomain: 'nit-time-table.firebaseapp.com',

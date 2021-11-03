@@ -43,7 +43,7 @@ body {
 }
 
 .active {
-  @apply text-black border-b-4 border-blue-600;
+  @apply text-gray-100 border-b-2 border-gray-50;
 }
 .activeb {
   @apply text-black border-b-4 border-blue-600;
