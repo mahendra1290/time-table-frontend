@@ -1,11 +1,16 @@
 <div class="border-2 text-white rounded-md border-gray-200 bg-gray-700 px-4 mx-auto mt-4 w-full md:w-3/4 shadow-lg">
+  <div class="flex px-2 pt-3 gap-2 items-center">
+    <p class="inline-block rounded-full bg-red-500 w-4 h-4 text-4xl"></p>
+    <span>Passed</span>
+    <p class="rounded-full inline-block bg-green-500 w-4 h-4 text-4xl"></p><span>Running</span>
+    <p class="rounded-full inline-block bg-blue-500 w-4 h-4 text-4xl"></p><span>Upcoming</span>
+  </div>
 
-  <div class="flex gap-4 border-b-2 last:border-none border-gray-200  flex-col w-full md:flex-row"
+  <div class="flex gap-4 border-b-2 last:border-none border-gray-200 flex-col w-full md:flex-row"
     *ngFor="let day of days; let i =index;">
     <div
       class="flex items-center justify-center min-w-[200px] mt-4 md:mb-4 font-bold bg-gray-900 shadow-md rounded-md min-h-full text-lg uppercase py-2 text-center">
       <h1>{{day}}</h1>
-
     </div>
     <div class="flex flex-wrap pb-4 md:py-4 gap-4 w-full justify-center"
       [ngClass]="periodsLoading ? 'items-center' : ''">
