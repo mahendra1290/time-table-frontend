@@ -48,3 +48,6 @@ body {
 .activeb {
   @apply text-black border-b-4 border-blue-600;
 }
+
+html, body { height: 100%; }
+body { margin: 0; }

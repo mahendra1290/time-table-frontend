@@ -1,5 +1,5 @@
 export interface Period {
-  _id: string;
+  id?: string;
   startTime: number;
   endTime: number;
   day: number;
@@ -7,5 +7,15 @@ export interface Period {
   meetLink: string;
   sections?: string[];
   branch?: string;
+  semester?: string;
   facultyName?: string;
+}
+
+export interface Branch {
+  code: string,
+  label: string,
+}
+
+export interface Semester {
+  label: string
 }

@@ -59,7 +59,7 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
     let startTimeInMinutes = startTime.hours() * 60 + startTime.minutes();
     let endTimeInMinutes = endTime.hours() * 60 + endTime.minutes();
 
-    const period: Omit<Period, '_id'> = {
+    const period: Period = {
       startTime: startTimeInMinutes,
       endTime: endTimeInMinutes,
       subject: this.subject.value,
@@ -68,15 +68,12 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
       sections: Array.from(this.sectionSelector?.selected || []),
     };
 
-    this.periodsService.addPeriod(period).subscribe(
-      (data) => console.log(data),
-      (error) => console.log(error)
-    );
+    this.periodsService.addPeriod(period).then((data) => console.log(data)).catch(err => console.log(err));
   }
 
-  constructor(private periodsService: PeriodsService) {}
+  constructor(private periodsService: PeriodsService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
     console.log(this.sectionSelector);

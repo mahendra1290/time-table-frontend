@@ -1,0 +1,41 @@
+.input-visible {
+    animation: fade-in 0.3s ease-out;
+    animation-fill-mode: forwards;
+}
+
+.period-input {
+    transition: all 0.3s linear;
+    transform-origin: left;
+
+}
+
+.period-block {
+    transition: max-height 0.3s linear;
+
+}
+
+.input-invisible {
+    height: 0;
+    padding: 0;
+    animation: fade-out 0.3s linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fade-in {
+	0% { display:block; opacity:0; transform: scale(0.5); }
+	100% { opacity: 1; transform: scale(1);}
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1; transform: scale(1);
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0; transform: scale(0.5) translate(-10%, -100%);
+    }
+}

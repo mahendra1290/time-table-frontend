@@ -1,12 +1,7 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { Period } from '../models/period';
 
@@ -14,26 +9,6 @@ import { Period } from '../models/period';
   selector: 'app-period-block',
   templateUrl: './period-block.component.html',
   styleUrls: ['./period-block.component.css'],
-  animations: [
-    trigger('openClosed', [
-      state(
-        'open',
-        style({
-          height: '*',
-          opacity: 1,
-        })
-      ),
-      state(
-        'closed',
-        style({
-          height: '0px',
-          opacity: 0,
-        })
-      ),
-      transition('open => closed', [animate('0.2s ease-in-out')]),
-      transition('closed => open', [animate('0.3s 100ms ease-in-out')]),
-    ]),
-  ],
 })
 export class PeriodBlockComponent implements OnInit {
   @Input()
@@ -51,6 +26,8 @@ export class PeriodBlockComponent implements OnInit {
 
   state: string = 'display';
 
+  inputDisplayState: string = 'none';
+
   currentTime = moment();
 
   @Output()
@@ -59,7 +36,7 @@ export class PeriodBlockComponent implements OnInit {
   @Output()
   delete: EventEmitter<string> = new EventEmitter();
 
-  constructor() {}
+  constructor(private snackBar: MatSnackBar, private clipboard: Clipboard) { }
 
   updatePeriod() {
     this.edit.emit(this.period);
@@ -68,7 +45,21 @@ export class PeriodBlockComponent implements OnInit {
 
   enterEditState() {
     this.state = 'edit';
+    this.inputDisplayState = 'block'
   }
 
-  ngOnInit(): void {}
+  copyLink() {
+    this.clipboard.copy(this.period.meetLink)
+    this.snackBar.open("Link copied to clipboard", undefined, { duration: 2000 })
+  }
+  animend() {
+    if (this.state == "edit") {
+      this.inputDisplayState = 'block';
+    } else {
+      this.inputDisplayState = 'none';
+    }
+
+  }
+
+  ngOnInit(): void { }
 }
