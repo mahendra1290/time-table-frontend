@@ -19,6 +19,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 import {
   MatSnackBarModule,
@@ -61,6 +63,7 @@ import { PeriodStatusIndicatorComponent } from './period-status-indicator/period
     MatIconModule,
     MatTooltipModule,
     ClipboardModule,
+    MatAutocompleteModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
@@ -76,7 +79,7 @@ import { PeriodStatusIndicatorComponent } from './period-status-indicator/period
       useValue: {
         duration: 2500,
         horizontalPosition: 'left',
-        panelClass: ['bg-blue-300', 'shadow-lg', 'text-black',],
+        panelClass: ['bg-blue-400', 'shadow-lg', 'text-black',],
       },
     },
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },

@@ -1,6 +1,7 @@
-<nav class="flex px-2 flex-wrap py-4 justify-between md:h-[90px] bg-gray-900 shadow-md items-center">
-  <div class="flex items-center gap-4">
-    <h1 class="text-2xl pl-2 md:pl-4 text-gray-400  font-bolder">Time Table</h1>
+<nav
+  class="flex px-2 w-full overflow-x-scroll md:overflow-hidden text-lg md:text-xl whitespace-nowrap py-4 justify-between bg-gray-900 shadow-md items-center">
+  <div class="flex items-center gap-4  font-mono">
+    <h1 class="text-xl md:text-2xl pl-2 md:pl-4 text-gray-200 font-bold first-letter:text-blue-400">Time Table</h1>
     <a class="text-gray-400 mr-2" routerLink="/add-period" routerLinkActive="active"
       [routerLinkActiveOptions]="{exact:
       true}">Add
@@ -10,33 +11,32 @@
 
   </div>
 
-
   <div class="flex items-center gap-4 bg-transparent px-4 py-2">
-    <p [class]="editSem ? 'block' : 'hidden'">
-      <mat-form-field class="select-field" appearance="outline">
-        <mat-label class="text-white">Semester</mat-label>
-        <mat-select #sem_select (selectionChange)="editSem=false" [(ngModel)]="sem">
-          <mat-option *ngFor="let option of sems" [value]="option">{{option}}</mat-option>
-
-        </mat-select>
-      </mat-form-field>
-    </p>
-
-    <h1 *ngIf="!editSem" (click)="editSemester()" class="cursor-pointer text-xl text-gray-100">
-      {{sem}} Sem
-    </h1>
-    <h1 *ngIf="!editBranch" (click)="setBranch()" class="cursor-pointer text-xl text-gray-100">
-      {{branch}} Engineering
-    </h1>
-    <p [class]="editBranch ? 'block' : 'hidden'">
-      <mat-form-field class="select-field" appearance="outline">
-        <mat-label class="text-white">Branch</mat-label>
-        <mat-select #branch_select (selectionChange)="editBranch=false" [(ngModel)]="branch">
-          <mat-option *ngFor="let option of branchs" [value]="option">{{option + ' Engineering'}}</mat-option>
-
-        </mat-select>
-      </mat-form-field>
-    </p>
+    <input type="text"
+      placeholder="Search for a street"
+      [(ngModel)]="sem"
+      [ngStyle]="{'width': sem.length + 3 + 'ch'}"
+      matTooltip="Change Semester"
+      class="cursor-pointer text-lg md:text-xl
+       font-mono outline-none border-0 text-white focus:border-0 focus:rounded-md focus:bg-gray-700 focus:ring-gray-200 bg-transparent transition-all duration-500"
+      [matAutocomplete]="semAutocomplete">
+    <mat-autocomplete #semAutocomplete="matAutocomplete">
+      <mat-option *ngFor="let option of sems" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+    <input type="text"
+      placeholder="Search for a street"
+      [(ngModel)]="branch"
+      matTooltip="Change Branch"
+      class="cursor-pointer text-lg md:text-xl font-mono outline-none border-0 text-white focus:border-0 focus:rounded-md focus:bg-gray-700 focus:ring-gray-200 bg-transparent transition-all duration-500"
+      [ngStyle]="{'width': branch.length + 3 +  'ch'}"
+      [matAutocomplete]="branchAutocomplete">
+    <mat-autocomplete #branchAutocomplete="matAutocomplete">
+      <mat-option *ngFor="let option of branchs" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
 
   </div>
 
