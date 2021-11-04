@@ -35,6 +35,7 @@ import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { PeriodStatusIndicatorComponent } from './period-status-indicator/period-status-indicator.component';
+import { PeriodCardComponent } from './period-card/period-card.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { PeriodStatusIndicatorComponent } from './period-status-indicator/period
     PeriodBlockComponent,
     LoadingSpinnerComponent,
     PeriodStatusIndicatorComponent,
+    PeriodCardComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,61 +1,129 @@
-<form class="container shadow-lg rounded-sm lg:w-1/4 md:w-1/3  w-[95%] p-6 mx-auto">
-  <h1 class="prose prose-2xl">Add Period</h1>
-  <div class="grid grid-cols-1 gap-6 mt-5">
-    <label class="block">
-      <span class="text-gray-700">Subject</span>
-      <input type="text" class=" uppercase form-input w-full block px-4 py-3 rounded-md" [formControl]="subject" />
-      <p class="text-sm text-red-600" *ngIf="subject.touched && subject.errors">* please enter subject</p>
-    </label>
+<div class="p-2">
+  <form class="container max-w-6xl shadow-lg rounded-md bg-gray-800 mt-4 text-white p-6 mx-auto">
+    <h1 class="prose prose-2xl text-gray-300">Add Period</h1>
+    <div class="flex flex-col md:flex-row mt-2 gap-6 divide-y-2 divide-x-0 md:divide-x-2 md:divide-y-0">
+      <div class="flex flex-col gap-6 w-full md:w-1/2">
+        <div class="flex gap-4">
+          <label class="block w-1/2 ">
+            <span class="">Subject Code</span>
+            <input type="text" class="input-field w-full uppercase block px-4 py-3 rounded-md"
+              [formControl]="subject" />
+            <!-- <p class="text-sm text-red-600" *ngIf="subject.touched && subject.errors">* please enter subject</p> -->
+          </label>
 
-    <label class="block">
-      <span class="text-gray-700">Meet Link</span>
-      <input type="url" class="form-input w-full block px-4 py-3 rounded-md" [formControl]="meetLink" />
-      <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p>
-    </label>
+          <label class="block w-1/2 ">
+            <span class="">Subject Name</span>
+            <input type="url" class="input-field w-full capitalize block px-4 py-3 rounded-md"
+              [formControl]="meetLink" />
+            <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
+          </label>
+        </div>
 
-    <label class="block" (click)="$event.stopPropagation()">
-      <span class="text-gray-700">Section</span>
-      <app-multi-select #section_multiselect [options]="sectionOptions"></app-multi-select>
-    </label>
+        <div class="flex flex-col md:flex-row gap-4">
 
-    <label class="block">
-      <span class=" text-gray-700">Period</span>
+          <label class="block w-full md:w-1/2">
+            <span class="">Meet link</span>
+            <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md"
+              [formControl]="meetLink" />
+            <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
+          </label>
 
-      <select class="form-select w-full block px-4 py-3 rounded-md" [formControl]="period">
-        <option [value]="timing.startTime+'|'+timing.endTime" *ngFor="let timing of periodTimings; let i = index">
-          {{timing.startTime + " - " + timing.endTime}}
-        </option>
-      </select>
-    </label>
+          <label class="block w-full  md:w-1/2">
+            <span class="">Faculty name (optional)</span>
+            <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md"
+              [formControl]="meetLink" />
+            <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
+          </label>
+        </div>
 
-    <span class="block text-gray-700">Day</span>
-    <div class="flex justify-between">
-      <div class="day-capsule" *ngFor="let day of days; let i = index;" (click)="toggleDay(i)"
-        [ngClass]="{'day-capsule-selected':selectedDay == i}">{{day}}</div>
+        <div class="flex gap-4">
+          <label class="block w-1/2">
+            <span class="">Branch</span>
+            <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md"
+              [formControl]="meetLink" />
+            <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
+          </label>
+
+          <label class="block w-1/2">
+            <span class="">Semester</span>
+            <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md"
+              [formControl]="meetLink" />
+            <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
+          </label>
+        </div>
+        <!-- 
+        <span class="block ">Day</span>
+        <div class="flex justify-between">
+          <div class="day-capsule" *ngFor="let day of days; let i = index;" (click)="toggleDay(i)"
+            [ngClass]="{'day-capsule-selected':selectedDay == i}">{{day}}</div>
+        </div> -->
+
+
+
+      </div>
+      <div class="flex flex-col gap-6 w-full md:w-1/2 pl-0 md:pl-6 pt-6 md:pt-0">
+        <div class="flex gap-4">
+          <label class="block">
+            <span class="">Time</span>
+            <input type="text" class="input-field uppercase form-input w-full block px-4 py-3 rounded-md"
+              [formControl]="subject" />
+            <!-- <p class="text-sm text-red-600" *ngIf="subject.touched && subject.errors">* please enter subject</p> -->
+          </label>
+
+          <label class="block">
+            <span class="">Day</span>
+            <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md"
+              [formControl]="meetLink" />
+            <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
+          </label>
+        </div>
+        <div class="flex gap-4">
+          <label class="block">
+            <span class="">Meet link</span>
+            <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md"
+              [formControl]="meetLink" />
+            <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
+          </label>
+          <label class="block">
+            <span class="">Section</span>
+            <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md"
+              [formControl]="meetLink" />
+            <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
+          </label>
+        </div>
+        <div class="flex justify-end">
+          <button
+            class="px-4 py-2 border ml-4 rounded-md text-black border-transparent hover:opacity-70 active:scale-95 bg-blue-400">Add</button>
+          <button
+            class="px-4 py-2 border ml-4 rounded-md text-black border-transparent hover:opacity-70 active:scale-95 bg-red-400">Reset</button>
+        </div>
+        <div class="flex flex-wrap gap-6">
+          <app-period-card class="flex-grow"></app-period-card>
+          <app-period-card class="flex-grow"></app-period-card>
+          <app-period-card class="flex-grow"></app-period-card>
+        </div>
+      </div>
     </div>
-
-
-
-    <button
+    <!-- <button
       [disabled]="!subject.valid || !meetLink.valid || !sectionSelector?.selected?.size"
       class="disabled:opacity-40 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md
-      text-black  bg-blue-400" (click)="addPeriod()">
+    text-black  bg-blue-400" (click)="addPeriod()">
       Add
     </button>
     <button
       type="reset"
       class="
-        py-2
-        px-4
-        border border-transparent
-        shadow-sm
-        text-sm
-        font-medium
-        rounded-md
-        text-black
-        bg-red-400
-      ">
+      py-2
+      px-4
+      border border-transparent
+      shadow-sm
+      text-sm
+      font-medium
+      rounded-md
+      text-black
+      bg-red-400
+    ">
       Reset
-    </button>
-  </div>
-</form>
+    </button> -->
+  </form>
+</div>

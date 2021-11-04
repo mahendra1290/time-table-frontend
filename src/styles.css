@@ -53,5 +53,9 @@ body {
   @apply text-gray-700
 }
 
+.input-field {
+  @apply bg-gray-600 px-2 border-none focus:outline-none focus:ring-gray-300
+}
+
 html, body { height: 100%; }
 body { margin: 0; }
