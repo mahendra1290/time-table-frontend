@@ -11,13 +11,13 @@
 
   </div>
 
-  <div class="flex items-center gap-4 bg-transparent px-4 py-2">
+  <div class="flex items-center bg-transparent px-4 py-2">
     <input type="text"
       placeholder="Search for a street"
       [(ngModel)]="sem"
-      [ngStyle]="{'width': sem.length + 3 + 'ch'}"
+      [ngStyle]="{'width': sem.length + 2 + 'ch'}"
       matTooltip="Change Semester"
-      class="cursor-pointer text-lg md:text-xl
+      class="cursor-pointer text-lg md:text-xl px-[1ch]
        font-mono outline-none border-0 text-white focus:border-0 focus:rounded-md focus:bg-gray-700 focus:ring-gray-200 bg-transparent transition-all duration-500"
       [matAutocomplete]="semAutocomplete">
     <mat-autocomplete #semAutocomplete="matAutocomplete">
@@ -29,8 +29,8 @@
       placeholder="Search for a street"
       [(ngModel)]="branch"
       matTooltip="Change Branch"
-      class="cursor-pointer text-lg md:text-xl font-mono outline-none border-0 text-white focus:border-0 focus:rounded-md focus:bg-gray-700 focus:ring-gray-200 bg-transparent transition-all duration-500"
-      [ngStyle]="{'width': branch.length + 3 +  'ch'}"
+      class="cursor-pointer text-lg px-[1ch] md:text-xl font-mono outline-none border-0 text-white focus:border-0 focus:rounded-md focus:bg-gray-700 focus:ring-gray-200 bg-transparent transition-all duration-500"
+      [ngStyle]="{'width': branch.length + 2 +  'ch'}"
       [matAutocomplete]="branchAutocomplete">
     <mat-autocomplete #branchAutocomplete="matAutocomplete">
       <mat-option *ngFor="let option of branchs" [value]="option">
