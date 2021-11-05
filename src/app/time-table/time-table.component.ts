@@ -92,7 +92,11 @@ export class TimeTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.periodService.periods.subscribe((periods) => {
+      console.log("new periods come", periods);
+
       this.periodsLoading = false;
+
+      this.periodsGroupedByDay = []
 
       for (let i = 0; i < 5; i++) {
         this.periodsGroupedByDay.push(this.groupPeriodsForDay(i, periods));

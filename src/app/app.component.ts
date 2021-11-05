@@ -1,5 +1,6 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
+import { SidebarService } from './sidebar.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,7 +22,7 @@ export class AppComponent {
   editSem: boolean = false;
 
   editBranch: boolean = false;
-  sems = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th'];
+  sems = ['1st Sem', '2nd Sem', '3rd Sem', '4th Sem', '5th Sem', '6th Sem', '7th Sem', '8th Sem'];
 
   login() {
     // this.authService.signInWithPopup(new firebase.auth.GoogleAuthProvider());
@@ -40,17 +41,21 @@ export class AppComponent {
   }
 
   branchs = [
-    'Computer',
-    'Civil',
-    'Information Techology',
-    'Mechanical',
-    'Electrical',
-    'Electronics & Communication',
+    'Computer Engineering',
+    'Civil Engineering',
+    'Information Techology Engineering',
+    'Mechanical Engineering',
+    'Electrical Engineering',
+    'Electronics & Communication Engineering',
   ];
 
   sem: string = this.sems[0];
 
   branch: string = this.branchs[0];
 
-  constructor() { }
+  openSidebar() {
+    this.sidebarService.open();
+  }
+
+  constructor(private sidebarService: SidebarService) { }
 }

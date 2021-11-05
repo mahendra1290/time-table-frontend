@@ -19,6 +19,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 import {
   MatSnackBarModule,
@@ -33,6 +36,9 @@ import { USE_EMULATOR as USE_AUTH_EMULATOR } from '@angular/fire/auth';
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { PeriodStatusIndicatorComponent } from './period-status-indicator/period-status-indicator.component';
+import { PeriodCardComponent } from './period-card/period-card.component';
+import { TimePickerComponent } from './time-picker/time-picker.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +50,9 @@ import { PeriodStatusIndicatorComponent } from './period-status-indicator/period
     PeriodBlockComponent,
     LoadingSpinnerComponent,
     PeriodStatusIndicatorComponent,
+    PeriodCardComponent,
+    TimePickerComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +70,8 @@ import { PeriodStatusIndicatorComponent } from './period-status-indicator/period
     MatIconModule,
     MatTooltipModule,
     ClipboardModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
@@ -76,7 +87,7 @@ import { PeriodStatusIndicatorComponent } from './period-status-indicator/period
       useValue: {
         duration: 2500,
         horizontalPosition: 'left',
-        panelClass: ['bg-blue-300', 'shadow-lg', 'text-black',],
+        panelClass: ['bg-blue-400', 'shadow-lg', 'text-black',],
       },
     },
     { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },

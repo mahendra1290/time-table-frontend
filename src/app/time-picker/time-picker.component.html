@@ -1,0 +1,32 @@
+<div class="flex gap-1 time-picker">
+    <!-- <mat-form-field class="text-white" appearance="outline">
+        <mat-select placeholder="hello">
+            <mat-option *ngFor="let val of hours" [value]="val">{{val}}</mat-option>
+        </mat-select>
+    </mat-form-field> -->
+    <input type="text" placeholder="hh"
+        class="bg-gray-600 border-none focus:outline-none px-[1ch] focus:ring-gray-300 w-[4ch] font-mono py-1 rounded-md"
+        [matAutocomplete]="hoursInp">
+    <mat-autocomplete #hoursInp="matAutocomplete">
+        <mat-option *ngFor="let option of hours" [value]="option">
+            {{option}}
+        </mat-option>
+    </mat-autocomplete>
+
+    <input type="text" placeholder="mm"
+        class="bg-gray-600 border-none focus:outline-none px-[1ch] focus:ring-gray-300 w-[4ch] font-mono py-1 rounded-md"
+        [matAutocomplete]="minutesInp">
+    <mat-autocomplete #minutesInp="matAutocomplete">
+        <mat-option *ngFor="let option of minutes" [value]="option">
+            {{option}}
+        </mat-option>
+    </mat-autocomplete>
+    <input type="text" placeholder="aa"
+        class="bg-gray-600 border-none focus:outline-none px-[1ch] focus:ring-gray-300 w-[4ch] font-mono py-1 rounded-md"
+        [matAutocomplete]="periodInp">
+    <mat-autocomplete #periodInp="matAutocomplete">
+        <mat-option *ngFor="let option of period" [value]="option">
+            {{option}}
+        </mat-option>
+    </mat-autocomplete>
+</div>
