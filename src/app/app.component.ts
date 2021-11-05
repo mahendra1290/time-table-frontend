@@ -1,5 +1,6 @@
 import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSelect } from '@angular/material/select';
+import { SidebarService } from './sidebar.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -52,5 +53,9 @@ export class AppComponent {
 
   branch: string = this.branchs[0];
 
-  constructor() { }
+  openSidebar() {
+    this.sidebarService.open();
+  }
+
+  constructor(private sidebarService: SidebarService) { }
 }

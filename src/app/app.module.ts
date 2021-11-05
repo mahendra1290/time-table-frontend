@@ -38,6 +38,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { PeriodStatusIndicatorComponent } from './period-status-indicator/period-status-indicator.component';
 import { PeriodCardComponent } from './period-card/period-card.component';
 import { TimePickerComponent } from './time-picker/time-picker.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { TimePickerComponent } from './time-picker/time-picker.component';
     PeriodStatusIndicatorComponent,
     PeriodCardComponent,
     TimePickerComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,

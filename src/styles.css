@@ -49,6 +49,10 @@ body {
   @apply text-black border-b-4 border-blue-600;
 }
 
+.sidebar-active-link {
+  @apply bg-blue-300
+}
+
 .mat-simple-snackbar-action {
   @apply text-gray-700
 }
@@ -59,3 +63,29 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; }
+
+.time-picker .mat-select-arrow {
+  border: none;
+ 
+} 
+
+.time-picker * {
+  color: white;
+}
+
+.time-picker .mat-form-field-outline {
+  top: 0 !important;
+  border: none;
+}
+
+.time-picker .mat-form-field-outline * {
+  border: none !important;
+}
+
+.time-picker .mat-form-field-infix {
+  border: none;
+}
+
+.time-picker .mat-form-field-flex {
+  @apply bg-gray-600 rounded-md
+}
