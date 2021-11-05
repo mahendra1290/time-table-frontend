@@ -11,6 +11,16 @@ export interface Period {
   facultyName?: string;
 }
 
+export interface Subject {
+  subjectCode: string,
+  subjectName: string,
+  branchCode: string,
+  semCode: string,
+  meetLink?: string,
+  facultyName?: string,
+  periods: Period[]
+}
+
 export interface Branch {
   code: string,
   label: string,

@@ -1,9 +1,11 @@
-<div class="bg-gray-600 rounded-md p-3 relative">
-    <h1>9 30 - 10 30 Monday</h1>
-    <a>https://localhost.com</a>
-    <p>CS A, CS B</p>
+<div class="bg-gray-600 rounded-md p-3 relative transition-all">
+    <h1>{{subjectPeriod.periodNo}} {{subjectPeriod.day}}</h1>
+    <a>{{subjectPeriod.meetLink}}</a>
+    <p>{{subjectPeriod.sections.join(',')}}</p>
     <mat-icon
-        class="absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 opacity-80 bg-red-500 hover:scale-105 cursor-pointer hover:opacity-100 active:scale-95 rounded-full">
-        close
+        matTooltip="remove"
+        (click)="remove.emit()"
+        class="absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 bg-red-500 hover:scale-105 cursor-pointer hover:opacity-100 active:scale-95 rounded-full">
+        remove
     </mat-icon>
 </div>

@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 import {
@@ -36,6 +37,7 @@ import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore'
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { PeriodStatusIndicatorComponent } from './period-status-indicator/period-status-indicator.component';
 import { PeriodCardComponent } from './period-card/period-card.component';
+import { TimePickerComponent } from './time-picker/time-picker.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { PeriodCardComponent } from './period-card/period-card.component';
     LoadingSpinnerComponent,
     PeriodStatusIndicatorComponent,
     PeriodCardComponent,
+    TimePickerComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +69,7 @@ import { PeriodCardComponent } from './period-card/period-card.component';
     MatTooltipModule,
     ClipboardModule,
     MatAutocompleteModule,
+    MatProgressSpinnerModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

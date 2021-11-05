@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SubjectPeriod } from '../add-period/add-period.component';
 
 @Component({
   selector: 'app-period-card',
@@ -7,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class PeriodCardComponent implements OnInit {
+  @Input()
+  subjectPeriod!: SubjectPeriod
+
+
+  @Output()
+  remove: EventEmitter<void> = new EventEmitter();
 
   constructor() { }
 
