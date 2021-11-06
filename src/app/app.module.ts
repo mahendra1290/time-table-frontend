@@ -39,6 +39,8 @@ import { PeriodStatusIndicatorComponent } from './period-status-indicator/period
 import { PeriodCardComponent } from './period-card/period-card.component';
 import { TimePickerComponent } from './time-picker/time-picker.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { AdminComponent } from './admin/admin.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     PeriodCardComponent,
     TimePickerComponent,
     SidebarComponent,
+    AdminComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
