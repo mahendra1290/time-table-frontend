@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Branch } from '../models/period';
 
-export interface Stream {
+export interface BranchSemOptions {
   branches: Branch[];
   semesters: string[];
 }
@@ -14,7 +14,7 @@ export interface Stream {
   styles: [],
 })
 export class AdminComponent implements OnInit {
-  stream = this.firestore.collection<Stream>('/stream');
+  stream = this.firestore.collection<BranchSemOptions>('/branch-sem-options');
   branches: Branch[] = [];
   semesters: string[] = [];
   id: string = '';
@@ -23,7 +23,7 @@ export class AdminComponent implements OnInit {
   branchLabel = new FormControl('');
   semNo = new FormControl('');
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) {}
 
   ngOnInit(): void {
     this.stream.snapshotChanges().subscribe((val) => {

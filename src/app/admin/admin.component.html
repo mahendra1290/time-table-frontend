@@ -12,7 +12,7 @@
     </div>
     <div>
         <h1>Semesters</h1>
-        <input type="number" [formControl]="semNo"><button class="bg-green-400 px-4 py-2"
+        <input type="text" [formControl]="semNo"><button class="bg-green-400 px-4 py-2"
             (click)="addSemester()">Add</button>
         <p *ngFor="let sem of semesters">{{sem}}</p>
     </div>
