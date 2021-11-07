@@ -7,12 +7,13 @@ import * as moment from 'moment';
 import { PeriodsService } from '../periods.service';
 import { Period } from '../models/period';
 import { groupBy } from 'rxjs/operators';
+import { UserSettingsService } from '../user-settings.service';
 
 export interface SubjectPeriod {
-  periodNo: string,
-  day: string,
-  meetLink: string,
-  sections: string[]
+  periodNo: string;
+  day: string;
+  meetLink: string;
+  sections: string[];
 }
 @Component({
   selector: 'app-add-period',
@@ -20,25 +21,24 @@ export interface SubjectPeriod {
   styleUrls: ['./add-period.component.css'],
 })
 export class AddPeriodComponent implements OnInit, AfterViewInit {
-
   addingPeriodLoading: boolean = false;
 
-  subjectPeriods: SubjectPeriod[] = []
+  subjectPeriods: SubjectPeriod[] = [];
 
   subjectform = this.fb.group({
     subjectCode: [''],
-    subjectName: [''],
-    meetLink: [''],
+    subjectName: ['', Validators.required],
+    meetLink: ['', Validators.required],
     facultyName: [''],
-    branch: [''],
-    semester: [''],
+    branch: ['', Validators.required],
+    semester: ['', Validators.required],
     period: this.fb.group({
-      periodNo: [''],
-      day: ['0'],
-      meetLink: [''],
-      sections: ['']
-    })
-  })
+      periodNo: ['', Validators.required],
+      day: ['0', Validators.required],
+      meetLink: ['', Validators.required],
+      sections: [''],
+    }),
+  });
 
   @ViewChild('section_multiselect')
   sectionSelector: MultiSelectComponent | null = null;
@@ -47,39 +47,38 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
 
   periodTimings = periodTimings;
 
-  sectionOptions = [
-    'CS A',
-    'CS B',
-    'CS 1',
-    'CS 2',
-    'CS 3',
-    'CS 4',
-    'CS 5',
-    'CS 6',
-  ];
-
   periodNumbers = periodTimings.map(
     (p) => `${p.periodNumber} (${p.startTime} - ${p.endTime})`
   );
 
-  timings = ['8:30 AM']
+  timings = ['8:30 AM'];
 
   selectedDay: number = 0;
 
+  selectedBranchCode?: string = '';
 
-  constructor(private periodsService: PeriodsService, private fb: FormBuilder) { }
+  constructor(
+    private periodsService: PeriodsService,
+    private fb: FormBuilder,
+    private userSettings: UserSettingsService
+  ) {}
 
   ngOnInit(): void {
-    // this.subjectform.valueChanges.subscribe(val => {
-    //   console.log(val);
-
-    // })
-    this.subjectform.get('meetLink')?.valueChanges.subscribe(val => {
-      3
-
-
+    this.subjectform.get('meetLink')?.valueChanges.subscribe((val) => {
+      3;
       this.subjectform.get('period.meetLink')?.setValue(val);
-    })
+    });
+    this.userSettings.userBranch.subscribe((branch) => {
+      this.subjectform.get('branch')?.setValue(branch?.label);
+      this.selectedBranchCode = branch?.code;
+      this.subjectform
+        .get('branch')
+        ?.disable({ onlySelf: true, emitEvent: false });
+    });
+    this.userSettings.userSem.subscribe((sem) => {
+      this.subjectform.get('semester')?.setValue(sem);
+      this.subjectform.get('semester')?.disable();
+    });
   }
 
   ngAfterViewInit(): void {
@@ -88,51 +87,75 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
 
   toggleDay(day: number) {
     this.selectedDay = day;
-    this.subjectform.get('period.day')?.setValue(day)
+    this.subjectform.get('period.day')?.setValue(day);
   }
 
-  addPeriod() {
-    let periodNo = this.subjectform.get('period.periodNo')?.value;
+  /**
+   * Returns start time and end time from period no string
+   * @param periodNo period timing string of format hh:mm:a|hh:mm:a
+   * @returns [number, number] tuple of start time and endtime
+   */
+  getStartTimeEndTime(periodNo: string): [number, number] {
     let st = periodNo.split('|')[0];
     let et = periodNo.split('|')[1];
-
     let startTime: moment.Moment = moment(st, 'hh:mm a');
     let endTime: moment.Moment = moment(et, 'HH:mm a');
     let startTimeInMinutes = startTime.hours() * 60 + startTime.minutes();
     let endTimeInMinutes = endTime.hours() * 60 + endTime.minutes();
+    return [startTimeInMinutes, endTimeInMinutes];
+  }
 
-    const period: Period = {
-      startTime: startTimeInMinutes,
-      endTime: endTimeInMinutes,
-      subject: this.subjectform.get('subjectName')?.value,
-      meetLink: this.subjectform.get('meetLink')?.value,
-      day: this.subjectform.get('period.day')?.value,
-      sections: this.subjectform.get('period.sections')?.value.split(','),
-      branch: this.subjectform.get('branch')?.value,
-      semester: this.subjectform.get('semester')?.value
-    };
+  addPeriod() {
+    const periodNo = this.subjectform.get('period.periodNo')?.value;
+    const day = this.subjectform.get('period.day')?.value;
+    const meetLink = this.subjectform.get('period.meetLink')?.value;
+    const sections = this.subjectform.get('period.sections')?.value.split(',');
+    const globalMeetLink = this.subjectform.get('meetLink')?.value;
 
-    // this.addingPeriodLoading = true;
+    this.subjectform.get('period')?.reset({ meetLink: globalMeetLink });
 
-    console.log(period);
-
-    this.subjectform.get('period')?.reset({ meetLink: period.meetLink })
-
-    this.subjectPeriods.push({ periodNo: periodNo, day: this.days[period.day], meetLink: period.meetLink, sections: period.sections || [] })
-
-    // this.periodsService.addPeriod(period).then((data) => {
-    //   console.log("period added", data);
-    //   this.addingPeriodLoading = false;
-
-    // }).catch(err => {
-    //   console.log(err);
-    //   this.addingPeriodLoading = false;
-
-    // });
+    this.subjectPeriods.push({
+      periodNo: periodNo,
+      day: this.days[day],
+      meetLink: meetLink,
+      sections: sections || [],
+    });
   }
 
   removePeriod(index: number) {
     this.subjectPeriods = this.subjectPeriods.filter((_, ind) => ind != index);
   }
 
+  addSubject() {
+    this.addingPeriodLoading = true;
+    const subject = this.subjectform.get('subjectName')?.value;
+    const branch = this.selectedBranchCode;
+    const sem = this.subjectform.get('semester')?.value;
+    const periods: Period[] = [];
+    for (const period of this.subjectPeriods) {
+      const [startTimeInMinutes, endTimeInMinutes] = this.getStartTimeEndTime(
+        period.periodNo
+      );
+      periods.push({
+        startTime: startTimeInMinutes,
+        endTime: endTimeInMinutes,
+        subject: subject,
+        meetLink: period.meetLink,
+        branch: branch,
+        semester: sem,
+        sections: period.sections,
+        day: this.days.findIndex((day) => day == period.day),
+      });
+    }
+    this.periodsService
+      .addPeriod(periods)
+      .then((data) => {
+        console.log(data);
+        this.addingPeriodLoading = false;
+      })
+      .catch((err) => {
+        console.log(err);
+        this.addingPeriodLoading = false;
+      });
+  }
 }
