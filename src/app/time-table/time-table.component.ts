@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { switchMap } from 'rxjs/operators';
 import { Period } from '../models/period';
@@ -16,7 +16,7 @@ export class TimeTableComponent implements OnInit, OnDestroy {
   constructor(
     private periodService: PeriodsService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
 
   periodsLoading = true;
 
@@ -87,16 +87,14 @@ export class TimeTableComponent implements OnInit, OnDestroy {
 
   async updatePeriod(period: Period) {
     await this.periodService.updatePeriod(period);
-    this.snackBar.open("Link updated", undefined, { duration: 2000 })
+    this.snackBar.open('Link updated', undefined, { duration: 2000 });
   }
 
   ngOnInit(): void {
     this.periodService.periods.subscribe((periods) => {
-      console.log("new periods come", periods);
-
       this.periodsLoading = false;
 
-      this.periodsGroupedByDay = []
+      this.periodsGroupedByDay = [];
 
       for (let i = 0; i < 5; i++) {
         this.periodsGroupedByDay.push(this.groupPeriodsForDay(i, periods));

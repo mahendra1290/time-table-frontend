@@ -2,14 +2,15 @@
     <h1 class="text-2xl">Select your branch and semester</h1>
     <label class="block mt-4">
         <span>Semester</span><br>
-        <select type="text" class="w-full rounded-md input-field" #semSelect>
-            <option *ngFor="let sem of branchSemOptions.semesters">{{sem}}</option>
+        <select type="text" class="w-full rounded-md input-field" [ngModel]="selectedSem" #semSelect>
+            <option *ngFor="let sem of branchSemOptions.semesters" [value]="sem">{{sem}}</option>
         </select>
     </label>
     <label class="block mt-4">
         <span>Branch</span><br>
-        <select type="text" class="w-full rounded-md input-field" #branchSelect>
-            <option *ngFor="let branch of branchSemOptions.branches">{{branch.code}} | {{branch.label}}</option>
+        <select type="text" class="w-full rounded-md input-field" [ngModel]="selectedBranch?.code" #branchSelect>
+            <option *ngFor="let branch of branchSemOptions.branches" [value]="branch.code">{{branch.code}} |
+                {{branch.label}}</option>
         </select>
     </label>
     <button
