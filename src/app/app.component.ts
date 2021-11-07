@@ -1,28 +1,32 @@
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { MatSelect } from '@angular/material/select';
+import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { BranchSemOptions } from './admin/admin.component';
+import { Branch } from './models/period';
 import { SidebarService } from './sidebar.service';
+import { UserSettingsService } from './user-settings.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'angular-frontend';
 
   readonly VAPID_PUBLIC_KEY =
     'BJ7DGYT1XzH-anNghEtE2Os9dtTvZScIMvcnmWzuXZDLodA1mOO168J86ok3tC8yr87wJ0NZmM2J33zo_6Bmutk';
 
-  @ViewChild('sem_select')
-  semSelector!: MatSelect;
+  branchSemOptionsCollection = this.firestore.collection<BranchSemOptions>(
+    '/branch-sem-options'
+  );
 
-  @ViewChild('branch_select')
-  branchSelector!: MatSelect;
-
-  editSem: boolean = false;
-
-  editBranch: boolean = false;
-  sems = ['1st Sem', '2nd Sem', '3rd Sem', '4th Sem', '5th Sem', '6th Sem', '7th Sem', '8th Sem'];
+  branchSemOptions: BranchSemOptions = {
+    branches: [],
+    semesters: [],
+  };
 
   login() {
     // this.authService.signInWithPopup(new firebase.auth.GoogleAuthProvider());
@@ -31,31 +35,44 @@ export class AppComponent {
   logout() {
     // this.authService.signOut();
   }
-  editSemester() {
-    this.editSem = true;
-    console.log(this.semSelector);
+  setSemester(sem: string) {
+    this.userSettingsService.setUserSem(sem);
   }
 
-  setBranch() {
-    this.editBranch = true;
+  setBranch(code: string) {
+    const branch = this.branchSemOptions.branches.filter(
+      (br) => br.code == code
+    )[0];
+    this.userSettingsService.setUserBranch(branch);
   }
 
-  branchs = [
-    'Computer Engineering',
-    'Civil Engineering',
-    'Information Techology Engineering',
-    'Mechanical Engineering',
-    'Electrical Engineering',
-    'Electronics & Communication Engineering',
-  ];
+  sem: string | null = null;
 
-  sem: string = this.sems[0];
-
-  branch: string = this.branchs[0];
+  branch: Branch | null = null;
 
   openSidebar() {
     this.sidebarService.open();
   }
 
-  constructor(private sidebarService: SidebarService) { }
+  constructor(
+    private sidebarService: SidebarService,
+    private firestore: AngularFirestore,
+    private userSettingsService: UserSettingsService
+  ) {}
+
+  ngOnInit() {
+    this.userSettingsService.userBranch.subscribe((branch) => {
+      this.branch = branch;
+    });
+    this.userSettingsService.userSem.subscribe((sem) => {
+      console.log(sem);
+
+      this.sem = sem;
+    });
+    this.branchSemOptionsCollection.get().subscribe((options) => {
+      if (!options.empty) {
+        this.branchSemOptions = options.docs[0].data();
+      }
+    });
+  }
 }

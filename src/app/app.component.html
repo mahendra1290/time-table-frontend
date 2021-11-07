@@ -41,41 +41,33 @@
 
 
   <div class="hidden md:flex items-center bg-transparent px-4 py-2">
-    <input type="text"
+    <select type="text"
       placeholder="Search for a street"
-      [(ngModel)]="sem"
-      [ngStyle]="{'width': sem.length + 2 + 'ch'}"
+      [ngModel]="sem"
+      (change)="setSemester(semSelect.value || '')"
+      [ngStyle]="{'width': (sem ? sem.length + 8  : 0)+ 'ch'}"
       matTooltip="Change Semester"
+      #semSelect
       class="cursor-pointer text-lg md:text-xl px-[1ch]
-       font-mono outline-none border-0 text-white focus:border-0 focus:rounded-md focus:bg-gray-700 focus:ring-gray-200 bg-transparent transition-all duration-500"
-      [matAutocomplete]="semAutocomplete">
-    <mat-autocomplete #semAutocomplete="matAutocomplete">
-      <mat-option *ngFor="let option of sems" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-    <input type="text"
+       font-mono outline-none border-0 text-white focus:border-0 focus:rounded-md focus:bg-gray-700 focus:ring-gray-200 bg-transparent transition-all duration-500">
+      <option *ngFor="let item of branchSemOptions.semesters" [value]="item">{{item + ' sem'}}</option>
+    </select>
+    <select type="text"
       placeholder="Search for a street"
-      [(ngModel)]="branch"
+      [ngModel]="branch ? branch.code : ''"
+      (change)="setBranch(branchSelect.value || '')"
       matTooltip="Change Branch"
+      #branchSelect
       class="cursor-pointer text-lg px-[1ch] md:text-xl font-mono outline-none border-0 text-white focus:border-0 focus:rounded-md focus:bg-gray-700 focus:ring-gray-200 bg-transparent transition-all duration-500"
-      [ngStyle]="{'width': branch.length + 2 +  'ch'}"
-      [matAutocomplete]="branchAutocomplete">
-    <mat-autocomplete #branchAutocomplete="matAutocomplete">
-      <mat-option *ngFor="let option of branchs" [value]="option">
-        {{option}}
-      </mat-option>
-    </mat-autocomplete>
-
+      [ngStyle]="{'width': (branch ? branch.label.length + 4 : 0)+  'ch'}">
+      <option *ngFor="let item of branchSemOptions.branches" [value]="item.code">{{item.label}}</option>
+    </select>
   </div>
 
-  <!-- <h1>{{authService.user | async }}</h1>
-
-  <button (click)="login()"> Login with Google</button>
-  <button (click)="logout()"> Logout</button> -->
-
 </nav>
-<router-outlet></router-outlet>
+<div class="px-4">
+  <router-outlet></router-outlet>
+</div>
 
 <footer class="text-lg text-center font-bold  mt-8 p-2">Made with <svg xmlns="http://www.w3.org/2000/svg"
     class="inline-block text-red-600 h-5 w-5"
