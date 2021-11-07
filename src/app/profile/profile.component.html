@@ -2,26 +2,18 @@
     <h1 class="text-2xl">Select your branch and semester</h1>
     <label class="block mt-4">
         <span>Semester</span><br>
-        <select type="text" class="w-full rounded-md input-field">
-            <option>1st</option>
-            <option>2nd</option>
-            <option>3rd</option>
-            <option>4th</option>
-            <option>5th</option>
-            <option>6th</option>
-            <option>7th</option>
-            <option>8th</option>
+        <select type="text" class="w-full rounded-md input-field" #semSelect>
+            <option *ngFor="let sem of branchSemOptions.semesters">{{sem}}</option>
         </select>
     </label>
     <label class="block mt-4">
         <span>Branch</span><br>
-        <select type="text" class="w-full rounded-md input-field">
-            <option>Computer Engineering</option>
-            <option>B</option>
-            <option>C</option>
+        <select type="text" class="w-full rounded-md input-field" #branchSelect>
+            <option *ngFor="let branch of branchSemOptions.branches">{{branch.code}} | {{branch.label}}</option>
         </select>
     </label>
     <button
+        (click)="setBranchSem(branchSelect.value, semSelect.value)"
         class="mt-4 ml-auto flex py-2 px-4 bg-blue-400 text-black hover:opacity-80 active:scale-95  rounded-sm items-center">
         Next<mat-icon class="">chevron_right</mat-icon>
     </button>
