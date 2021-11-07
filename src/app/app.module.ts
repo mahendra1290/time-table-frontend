@@ -22,7 +22,6 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-
 import {
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
@@ -91,12 +90,18 @@ import { ProfileComponent } from './profile/profile.component';
       useValue: {
         duration: 2500,
         horizontalPosition: 'left',
-        panelClass: ['bg-blue-400', 'shadow-lg', 'text-black',],
+        panelClass: ['bg-blue-400', 'shadow-lg', 'text-black'],
       },
     },
-    { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },
-    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 8080] : undefined },
+    {
+      provide: USE_AUTH_EMULATOR,
+      useValue: environment.useEmulators ? ['localhost', 9099] : undefined,
+    },
+    {
+      provide: USE_FIRESTORE_EMULATOR,
+      useValue: environment.useEmulators ? ['localhost', 8080] : undefined,
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
