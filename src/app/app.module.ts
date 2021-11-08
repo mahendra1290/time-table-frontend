@@ -28,6 +28,10 @@ import {
 } from '@angular/material/snack-bar';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import {
+  AngularFireAnalyticsModule,
+  ScreenTrackingService,
+} from '@angular/fire/analytics';
 import { environment } from 'src/environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -77,6 +81,7 @@ import { ProfileComponent } from './profile/profile.component';
     MatProgressSpinnerModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    AngularFireAnalyticsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
@@ -85,6 +90,7 @@ import { ProfileComponent } from './profile/profile.component';
     }),
   ],
   providers: [
+    ScreenTrackingService,
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
       useValue: {
