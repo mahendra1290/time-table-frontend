@@ -1,6 +1,6 @@
 <app-sidebar></app-sidebar>
 <nav
-  class="flex px-4 w-full overflow-hidden text-lg md:text-xl whitespace-nowrap py-4 md:py-1 justify-between bg-gray-900 shadow-md items-center">
+  class="fixed top-0 z-40 flex px-4 w-full overflow-hidden text-lg md:text-xl whitespace-nowrap py-4 md:py-1 justify-between bg-gray-900 shadow-md items-center">
   <div class="flex items-center gap-4  font-mono">
     <p class="flex items-center md:hidden">
       <mat-icon class="stroke-current text-white" (click)="openSidebar()">menu</mat-icon>
@@ -16,7 +16,7 @@
   </div>
 
 
-  <div class="flex items-center text-white gap-4 md:hidden">
+  <div class="flex items-center font-mono text-white gap-4 md:hidden">
     <p *ngIf="sem">{{sem + ' sem'}}</p>
     <p *ngIf="branch">{{branch?.code}}</p>
   </div>
@@ -47,7 +47,7 @@
   </div>
 
 </nav>
-<div class="px-4">
+<div class="px-4 mt-20">
   <router-outlet></router-outlet>
 </div>
 
