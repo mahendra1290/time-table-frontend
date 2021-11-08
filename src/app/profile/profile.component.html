@@ -1,0 +1,28 @@
+<div class="text-white xl:w-1/4 lg:w-1/3 sm:w-1/2 bg-gray-800 bg-opacity-80 rounded-md mx-auto p-6 mt-6">
+    <h1 class="text-2xl">Select your branch and semester</h1>
+    <label class="block mt-4">
+        <span>Semester</span><br>
+        <select type="text" class="w-full rounded-md input-field" [ngModel]="selectedSem" #semSelect>
+            <option *ngFor="let sem of branchSemOptions.semesters" [value]="sem">{{sem}}</option>
+        </select>
+    </label>
+    <label class="block mt-4">
+        <span>Branch</span><br>
+        <select type="text" class="w-full rounded-md input-field" [ngModel]="selectedBranch?.code" #branchSelect>
+            <option *ngFor="let branch of branchSemOptions.branches" [value]="branch.code">{{branch.code}} |
+                {{branch.label}}</option>
+        </select>
+    </label>
+    <div class="mt-4">
+        <p>Auto scroll to current day:</p>
+          <input type="radio" id="off" name="auto-scroll" value="Off" [formControl]="autoscroll">
+          <label for="off">Off</label><br>
+          <input type="radio" id="on" name="auto-scroll" value="On" [formControl]="autoscroll">
+          <label for="on">On</label><br>
+    </div>
+    <button
+        (click)="setBranchSem(branchSelect.value, semSelect.value)"
+        class="mt-4 ml-auto flex py-2 px-4 bg-blue-400 text-black hover:opacity-80 active:scale-95  rounded-sm items-center">
+        Next<mat-icon class="">chevron_right</mat-icon>
+    </button>
+</div>

@@ -1,7 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { switchMap } from 'rxjs/operators';
 import { Period } from '../models/period';
@@ -12,11 +20,14 @@ import { PeriodsService } from '../periods.service';
   templateUrl: './time-table.component.html',
   styleUrls: ['./time-table.component.css'],
 })
-export class TimeTableComponent implements OnInit, OnDestroy {
+export class TimeTableComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private periodService: PeriodsService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {}
+
+  @ViewChildren('day_box')
+  dayBoxes!: QueryList<ElementRef<HTMLDivElement>>;
 
   periodsLoading = true;
 
@@ -87,16 +98,15 @@ export class TimeTableComponent implements OnInit, OnDestroy {
 
   async updatePeriod(period: Period) {
     await this.periodService.updatePeriod(period);
-    this.snackBar.open("Link updated", undefined, { duration: 2000 })
+    this.snackBar.open('Link updated', undefined, { duration: 2000 });
   }
 
   ngOnInit(): void {
     this.periodService.periods.subscribe((periods) => {
-      console.log("new periods come", periods);
-
       this.periodsLoading = false;
+      this.scrollToCurrentDay();
 
-      this.periodsGroupedByDay = []
+      this.periodsGroupedByDay = [];
 
       for (let i = 0; i < 5; i++) {
         this.periodsGroupedByDay.push(this.groupPeriodsForDay(i, periods));
@@ -110,6 +120,25 @@ export class TimeTableComponent implements OnInit, OnDestroy {
         this.currentTime.hour() * 60 + this.currentTime.minutes();
     }, this.updateTimeInMilliSeconds);
   }
+
+  scrollToCurrentDay() {
+    const autoscroll = localStorage.getItem('auto-scroll');
+    if (autoscroll && autoscroll == 'On') {
+      this.dayBoxes.forEach((item, index) => {
+        if (index == this.currentDay) {
+          setTimeout(() => {
+            console.log(item);
+            item.nativeElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }, 3000);
+        }
+      });
+    }
+  }
+
+  ngAfterViewInit(): void {}
 
   ngOnDestroy(): void {
     clearInterval(this.timer);

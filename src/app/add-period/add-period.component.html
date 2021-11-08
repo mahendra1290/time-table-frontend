@@ -1,6 +1,6 @@
-<div class="p-2">
+<div>
   <form [formGroup]="subjectform"
-    class="relative container max-w-6xl shadow-lg overflow-hidden rounded-md bg-gray-800 mt-4 text-white p-6 mx-auto">
+    class="bg-opacity-80 relative container max-w-6xl shadow-lg overflow-hidden rounded-md bg-gray-800 mt-4 text-white p-6 mx-auto">
     <div *ngIf="addingPeriodLoading"
       class="transition-all flex justify-center items-center absolute top-0 left-0 right-0 bottom-0 z-10 bg-gray-600 opacity-50">
       <mat-spinner class="text-gray-200"></mat-spinner>
@@ -17,7 +17,7 @@
           </label>
 
           <label class="block w-1/2 ">
-            <span class="">Subject Name</span>
+            <span class="">Subject Name *</span>
             <input type="url" class="input-field w-full capitalize block px-4 py-3 rounded-md"
               formControlName="subjectName" />
             <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
@@ -27,7 +27,7 @@
         <div class="flex flex-col md:flex-row gap-4">
 
           <label class="block w-full md:w-1/2">
-            <span class="">Meet link</span>
+            <span class="">Meet link *</span>
             <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md"
               formControlName="meetLink" />
             <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
@@ -42,24 +42,26 @@
         </div>
 
         <div class="flex gap-4">
-          <label class="block w-1/2">
-            <span class="">Branch</span>
-            <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md"
-              formControlName="branch" />
-            <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
-          </label>
 
           <label class="block w-1/2">
             <span class="">Semester</span>
-            <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md"
+            <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md disabled:opacity-60"
               formControlName="semester" />
+            <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
+          </label>
+          <label class="block w-1/2">
+            <span class="">Branch</span>
+            <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md disabled:opacity-60"
+              formControlName="branch" />
             <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
           </label>
         </div>
         <div class="w-full mt-auto flex gap-4">
           <button
-            (click)="addPeriod()"
-            class="w-min px-6 flex py-2 border rounded-full text-black border-transparent hover:opacity-70 active:scale-95 bg-green-400">
+            [disabled]="!subjectform.valid && this.subjectPeriods.length == 0"
+            (click)="addSubject()"
+            [matTooltip]="subjectform.valid ? 'add subject' : 'disabled'"
+            class="disabled:opacity-60 w-min px-6 flex py-2 border rounded-full text-black border-transparent hover:opacity-70 active:scale-95 bg-green-400">
             Add
           </button>
           <button
@@ -84,7 +86,7 @@
           <!-- </div> -->
           <!-- </label> -->
           <label class="block w-full">
-            <span class="">Period No</span>
+            <span class="">Period No *</span>
             <input type="text" class="input-field uppercase form-input w-full block px-4 py-3 rounded-md"
               formControlName="periodNo" [matAutocomplete]="periodAutocomplete" />
             <mat-autocomplete #periodAutocomplete="matAutocomplete">
@@ -114,7 +116,7 @@
             <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->
           </label>
           <label class="block">
-            <span class="">Section</span>
+            <span class="">Section *</span>
             <input type="url" class="input-field form-input w-full block px-4 py-3 rounded-md"
               formControlName="sections" />
             <!-- <p class="text-sm text-red-600" *ngIf="meetLink.touched && meetLink.errors">* please enter meet link</p> -->

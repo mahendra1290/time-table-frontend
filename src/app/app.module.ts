@@ -22,13 +22,16 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-
 import {
   MatSnackBarModule,
   MAT_SNACK_BAR_DEFAULT_OPTIONS,
 } from '@angular/material/snack-bar';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import {
+  AngularFireAnalyticsModule,
+  ScreenTrackingService,
+} from '@angular/fire/analytics';
 import { environment } from 'src/environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -39,6 +42,8 @@ import { PeriodStatusIndicatorComponent } from './period-status-indicator/period
 import { PeriodCardComponent } from './period-card/period-card.component';
 import { TimePickerComponent } from './time-picker/time-picker.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { AdminComponent } from './admin/admin.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +58,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     PeriodCardComponent,
     TimePickerComponent,
     SidebarComponent,
+    AdminComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +81,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     MatProgressSpinnerModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    AngularFireAnalyticsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
@@ -82,17 +90,24 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     }),
   ],
   providers: [
+    ScreenTrackingService,
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
       useValue: {
         duration: 2500,
         horizontalPosition: 'left',
-        panelClass: ['bg-blue-400', 'shadow-lg', 'text-black',],
+        panelClass: ['bg-blue-400', 'shadow-lg', 'text-black'],
       },
     },
-    { provide: USE_AUTH_EMULATOR, useValue: environment.useEmulators ? ['localhost', 9099] : undefined },
-    { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 8080] : undefined },
+    {
+      provide: USE_AUTH_EMULATOR,
+      useValue: environment.useEmulators ? ['localhost', 9099] : undefined,
+    },
+    {
+      provide: USE_FIRESTORE_EMULATOR,
+      useValue: environment.useEmulators ? ['localhost', 8080] : undefined,
+    },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
