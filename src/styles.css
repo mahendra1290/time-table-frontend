@@ -89,3 +89,11 @@ body { margin: 0; }
 .time-picker .mat-form-field-flex {
   @apply bg-gray-600 rounded-md
 }
+
+body {
+  background-image: url("./assets/bg.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
