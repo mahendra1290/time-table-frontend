@@ -13,6 +13,13 @@
                 {{branch.label}}</option>
         </select>
     </label>
+    <div class="mt-4">
+        <p>Auto scroll to current day:</p>
+          <input type="radio" id="off" name="auto-scroll" value="Off" [formControl]="autoscroll">
+          <label for="off">Off</label><br>
+          <input type="radio" id="on" name="auto-scroll" value="On" [formControl]="autoscroll">
+          <label for="on">On</label><br>
+    </div>
     <button
         (click)="setBranchSem(branchSelect.value, semSelect.value)"
         class="mt-4 ml-auto flex py-2 px-4 bg-blue-400 text-black hover:opacity-80 active:scale-95  rounded-sm items-center">

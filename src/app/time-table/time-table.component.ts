@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -12,11 +20,14 @@ import { PeriodsService } from '../periods.service';
   templateUrl: './time-table.component.html',
   styleUrls: ['./time-table.component.css'],
 })
-export class TimeTableComponent implements OnInit, OnDestroy {
+export class TimeTableComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private periodService: PeriodsService,
     private snackBar: MatSnackBar
   ) {}
+
+  @ViewChildren('day_box')
+  dayBoxes!: QueryList<ElementRef<HTMLDivElement>>;
 
   periodsLoading = true;
 
@@ -93,6 +104,7 @@ export class TimeTableComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.periodService.periods.subscribe((periods) => {
       this.periodsLoading = false;
+      this.scrollToCurrentDay();
 
       this.periodsGroupedByDay = [];
 
@@ -108,6 +120,25 @@ export class TimeTableComponent implements OnInit, OnDestroy {
         this.currentTime.hour() * 60 + this.currentTime.minutes();
     }, this.updateTimeInMilliSeconds);
   }
+
+  scrollToCurrentDay() {
+    const autoscroll = localStorage.getItem('auto-scroll');
+    if (autoscroll && autoscroll == 'On') {
+      this.dayBoxes.forEach((item, index) => {
+        if (index == this.currentDay) {
+          setTimeout(() => {
+            console.log(item);
+            item.nativeElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }, 3000);
+        }
+      });
+    }
+  }
+
+  ngAfterViewInit(): void {}
 
   ngOnDestroy(): void {
     clearInterval(this.timer);

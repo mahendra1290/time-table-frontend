@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BranchSemOptions } from '../admin/admin.component';
 import { Branch } from '../models/period';
@@ -19,6 +20,7 @@ export class ProfileComponent implements OnInit {
 
   selectedBranch?: Branch;
   selectedSem?: string;
+  autoscroll = new FormControl(localStorage.getItem('auto-scroll') || 'Off');
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe((data) => {
@@ -32,6 +34,12 @@ export class ProfileComponent implements OnInit {
       this.selectedSem = branchSem
         ? branchSem.sem
         : this.branchSemOptions.semesters[0];
+    });
+    if (!localStorage.getItem('auto-scroll')) {
+      localStorage.setItem('auto-scroll', this.autoscroll.value);
+    }
+    this.autoscroll.valueChanges.subscribe((val) => {
+      localStorage.setItem('auto-scroll', val);
     });
   }
 

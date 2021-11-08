@@ -10,7 +10,11 @@
   <div class="flex gap-4 border-b-2 last:border-none border-gray-200 flex-col w-full md:flex-row"
     *ngFor="let day of days; let i =index;">
     <div
+      #day_box
+      [ngClass]="i == currentDay ? 'border-4 border-green-500' : ''"
       class="flex items-center justify-center min-w-[200px] mt-4 md:mb-4 font-bold bg-gray-900 shadow-md rounded-md min-h-full text-lg uppercase py-2 text-center">
+
+
       <h1>{{day}}</h1>
     </div>
     <div class="flex flex-wrap pb-4 md:py-4 gap-4 w-full justify-center"
