@@ -8,6 +8,7 @@ import { PeriodsService } from '../periods.service';
 import { Period } from '../models/period';
 import { groupBy } from 'rxjs/operators';
 import { UserSettingsService } from '../user-settings.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface SubjectPeriod {
   periodNo: string;
@@ -60,7 +61,8 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
   constructor(
     private periodsService: PeriodsService,
     private fb: FormBuilder,
-    private userSettings: UserSettingsService
+    private userSettings: UserSettingsService,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -150,11 +152,15 @@ export class AddPeriodComponent implements OnInit, AfterViewInit {
     this.periodsService
       .addPeriod(periods)
       .then((data) => {
-        console.log(data);
         this.addingPeriodLoading = false;
+        this.snackbar.open('Subject added successfully', '', {
+          duration: 2000,
+        });
+        this.subjectform.reset();
+        this.subjectPeriods = [];
       })
       .catch((err) => {
-        console.log(err);
+        this.snackbar.open('Something went wrong', '', { duration: 2000 });
         this.addingPeriodLoading = false;
       });
   }
