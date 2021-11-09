@@ -27,6 +27,7 @@
         <app-period-block
           class="flex-grow bg-gray-900 shadow-md rounded-md px-3 py-3"
           [period]="period"
+          [showEditDelete]="showEditDeleteOption"
           (delete)="period.id && showDeletedSnackbar(period.day, period.id)"
           (edit)="updatePeriod($event)"
           [currentTimeInMinutes]="currentTimeInMinutes"
