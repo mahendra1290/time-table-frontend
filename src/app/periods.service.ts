@@ -50,13 +50,14 @@ export class PeriodsService {
   }
 
   public addPeriod(periods: Period[]) {
-    const periodAddPromises: Promise<any>[] = [];
+    const batch = this.firestore.firestore.batch();
     for (let period of periods) {
-      periodAddPromises.push(
-        this.firestore.collection<Period>('/periods').add(period)
+      batch.set(
+        this.firestore.firestore.doc(`/periods/${this.firestore.createId()}`),
+        period
       );
     }
-    return Promise.all(periodAddPromises);
+    return batch.commit();
   }
 
   deletePeriod(id: string): Promise<void> {
