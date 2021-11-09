@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { User } from '../auth.service';
 import { SidebarService, SidebarState } from '../sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class SidebarComponent implements OnInit {
-  state!: Observable<SidebarState>
+  state!: Observable<SidebarState>;
 
-  constructor(private sidebarService: SidebarService) { }
+  @Input()
+  user: User | null | undefined = null;
+
+  constructor(private sidebarService: SidebarService) {}
 
   ngOnInit(): void {
     this.state = this.sidebarService.state;
@@ -20,5 +23,4 @@ export class SidebarComponent implements OnInit {
   close() {
     this.sidebarService.close();
   }
-
 }
