@@ -6,13 +6,16 @@
     [ngClass]="(state | async) == 'closed' ? '-left-full' : 'left-0' ">
     <h1 class="text-2xl pl-4 py-4 shadow-sm text-gray-800 font-bold first-letter:text-blue-400">Time Table</h1>
     <!-- <hr class="border-none h-[2px] bg-gray-100 mb-4"> -->
-    <div class="pl-4 flex mb-4 bg-gray-200 py-2 items-center" *ngIf="user">
-        <img class="rounded-full w-16" [src]="user?.photoURL">
-        <h1 class="ml-2 text-2xl">{{user?.displayName}}</h1>
+    <div class="pl-4 flex mb-4 bg-gray-100 shadow-md py-2 items-center" *ngIf="(auth.user$ | async)">
+        <img class="rounded-full w-16" [src]="(auth.user$ | async)?.photoURL">
+        <div>
+            <h1 class="ml-2 text-2xl">{{(auth.user$ | async)?.displayName}}</h1>
+            <p class="ml-2 text-gray-500 ">{{(auth.user$ | async)?.email}}</p>
+        </div>
     </div>
 
     <div class="flex flex-col gap-4">
-        <a routerLink='add-period' (click)="close()" routerLinkActive='sidebar-active-link'
+        <a *ngIf="(auth.user$ | async)" routerLink='add-period' (click)="close()" routerLinkActive='sidebar-active-link'
             [routerLinkActiveOptions]="{exact:true}"
             class="pl-4 py-4 shadow-sm rounded-r-full bg-blue-50 mr-8">Add Period</a>
         <a routerLink='' routerLinkActive='sidebar-active-link' (click)="close()"
@@ -21,6 +24,14 @@
         <a routerLink='/profile' routerLinkActive='sidebar-active-link' (click)="close()"
             [routerLinkActiveOptions]="{exact:true}"
             class="pl-4 py-4 shadow-sm rounded-r-full bg-blue-50 mr-8">Settings</a>
+        <a *ngIf="(auth.user$ | async)" class="pl-4 py-4 shadow-sm rounded-r-full bg-blue-50 mr-8"
+            (click)="auth.signOut()">
+            Log out
+        </a>
+        <a *ngIf="!(auth.user$ | async)" class="pl-4 py-4 shadow-sm rounded-r-full bg-blue-50 mr-8"
+            (click)="auth.googleSignin()">
+            Log In
+        </a>
 
     </div>
 </div>

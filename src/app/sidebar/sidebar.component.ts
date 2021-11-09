@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../auth.service';
+import { AuthService, User } from '../auth.service';
 import { SidebarService, SidebarState } from '../sidebar.service';
 
 @Component({
@@ -11,10 +11,7 @@ import { SidebarService, SidebarState } from '../sidebar.service';
 export class SidebarComponent implements OnInit {
   state!: Observable<SidebarState>;
 
-  @Input()
-  user: User | null | undefined = null;
-
-  constructor(private sidebarService: SidebarService) {}
+  constructor(private sidebarService: SidebarService, public auth: AuthService) {}
 
   ngOnInit(): void {
     this.state = this.sidebarService.state;
