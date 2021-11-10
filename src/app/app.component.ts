@@ -4,6 +4,7 @@ import { MatSelect } from '@angular/material/select';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { BranchSemOptions } from './admin/admin.component';
+import { AuthService } from './auth.service';
 import { Branch } from './models/period';
 import { SidebarService } from './sidebar.service';
 import { UserSettingsService } from './user-settings.service';
@@ -57,7 +58,8 @@ export class AppComponent implements OnInit {
   constructor(
     private sidebarService: SidebarService,
     private firestore: AngularFirestore,
-    private userSettingsService: UserSettingsService
+    private userSettingsService: UserSettingsService,
+    public auth: AuthService
   ) {}
 
   ngOnInit() {

@@ -26,7 +26,7 @@
               <span class="text-white">Join</span>
             </button>
           </a>
-          <button (click)="enterEditState()" mat-menu-item>
+          <button *ngIf="showEditDelete" (click)="enterEditState()" mat-menu-item>
             <svg xmlns="http://www.w3.org/2000/svg" class="text-green-500 h-6 w-6 inline-block mr-4" fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor">
@@ -35,7 +35,7 @@
             </svg>
             <span class="text-white">Edit</span>
           </button>
-          <button mat-menu-item (click)="delete.emit(period.id)">
+          <button *ngIf="showEditDelete" mat-menu-item (click)="delete.emit(period.id)">
             <svg xmlns="http://www.w3.org/2000/svg" class="text-red-400 h-6 w-6 inline-block mr-4" fill="none"
               viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

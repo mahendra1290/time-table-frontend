@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Input,
   OnDestroy,
   OnInit,
   QueryList,
@@ -9,9 +10,10 @@ import {
 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { groupBy } from 'rxjs/internal/operators/groupBy';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
+import { AuthService } from '../auth.service';
 import { Period } from '../models/period';
 import { PeriodsService } from '../periods.service';
 
@@ -23,13 +25,16 @@ import { PeriodsService } from '../periods.service';
 export class TimeTableComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private periodService: PeriodsService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private auth: AuthService
   ) {}
 
   @ViewChildren('day_box')
   dayBoxes!: QueryList<ElementRef<HTMLDivElement>>;
 
   periodsLoading = true;
+
+  showEditDeleteOption = false;
 
   periods: Period[] = [];
 
@@ -119,6 +124,14 @@ export class TimeTableComponent implements OnInit, OnDestroy, AfterViewInit {
       this.currentTimeInMinutes =
         this.currentTime.hour() * 60 + this.currentTime.minutes();
     }, this.updateTimeInMilliSeconds);
+
+    this.auth.user$.subscribe(user => {
+      if (user) {
+        this.showEditDeleteOption = true;
+      } else {
+        this.showEditDeleteOption = false;
+      }
+    })
   }
 
   scrollToCurrentDay() {

@@ -12,6 +12,9 @@ import { Period } from '../models/period';
 })
 export class PeriodBlockComponent implements OnInit {
   @Input()
+  showEditDelete: boolean = false;
+
+  @Input()
   period!: Period;
 
   @Input()
@@ -36,7 +39,7 @@ export class PeriodBlockComponent implements OnInit {
   @Output()
   delete: EventEmitter<string> = new EventEmitter();
 
-  constructor(private snackBar: MatSnackBar, private clipboard: Clipboard) { }
+  constructor(private snackBar: MatSnackBar, private clipboard: Clipboard) {}
 
   updatePeriod() {
     this.edit.emit(this.period);
@@ -45,21 +48,22 @@ export class PeriodBlockComponent implements OnInit {
 
   enterEditState() {
     this.state = 'edit';
-    this.inputDisplayState = 'block'
+    this.inputDisplayState = 'block';
   }
 
   copyLink() {
-    this.clipboard.copy(this.period.meetLink)
-    this.snackBar.open("Link copied to clipboard", undefined, { duration: 2000 })
+    this.clipboard.copy(this.period.meetLink);
+    this.snackBar.open('Link copied to clipboard', undefined, {
+      duration: 2000,
+    });
   }
   animend() {
-    if (this.state == "edit") {
+    if (this.state == 'edit') {
       this.inputDisplayState = 'block';
     } else {
       this.inputDisplayState = 'none';
     }
-
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }
